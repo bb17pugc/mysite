@@ -1,0 +1,490 @@
+
+{% extends 'Instagram/layout.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="/static/instagram/croppie.css"  />
+<script src="/static/instagram/croppie.js"></script>
+
+<div class="container" >
+ 
+    <br>
+
+<div class="col-lg-12 col-md-12 col-sm-12" >
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-4 text-center">
+        <a href="#ex1" id="open" >
+            <img class="profile-image border"  src="{{user.image}}"   width="200" height="200" style="border-width: 5px !important;border-color:green !important;border-radius: 1000px;" alt="">
+        </a>
+        </div>
+        <div class="col-lg-8 px-4" style="height: 10rem;">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div style="padding:0px;margin: 0px;" class="row col-lg-6 col-md-12 col-sm-12 " >
+                            <label  style="margin:0px ;font-weight: 100;font-size: 35px;" >
+                                    {{user.Username}}
+                            </label>
+                            <button tabindex="0" style="background-color: transparent ;border: none;outline: none;"  data-placement="bottom" role="button" data-toggle="popover" data-trigger="focus" title="" data-html="true" data-content=""> 
+                                <i class="mx-4 fa fa-gear fa-2x" style="color: gray;" >
+                                   </i>  
+                            </button>
+                           
+                        </div>
+
+
+                        <div  id="ex1" class="modal border" style="resize: vertical;max-height: 600px;overflow: hidden;"  >
+                           
+                            <div class=" col-lg-12 col-md-12 col-sm-12 text-center" >
+                                <div id="image_demo" class="collapse"  ></div>
+                                <div class="collapse profile-loader" style="width: 100%;overflow: hidden;" >
+                                    <div style="width: 100%;background-color: lightgray;overflow: hidden;" >
+                                        <div class="loader" ></div>
+                                    </div>
+                                    <b>uploading picture</b>  
+                                </div>
+                                 <br>   
+                                <div class="col-lg-12 col-sm-12 col-md-12 text-center " >
+                                        <img  src="{{request.session.image}}"  width="200" height="200" id="imagePreview" style="border: solid 5px royalblue;border-radius: 120px;padding: 10px;">
+                                    <label class="text-center py-2" style="display: block;">
+                                        <p id="picname" >
+                                            PROFILE PICTURE
+                                        </p> 
+                                    </label>
+                                    <label for="picture" onclick="CheckFile()" id="lblPic" class="btn btn-defualt btn-block border px-2 btn-lg" style="padding:5px;">
+                                        <input onchange="ShowImagePreview(this,document.getElementById('imagePreview'))" type="file" id="picture" name="picture" accept="image/*" style="display: none;" />
+                                    Browse
+                                    </label>
+                                  
+                                    <br>
+                                    <button class="btn btn-primary btn-block" id="btn-upload" type="button" > Upload </button>
+                                <a href="#" rel="modal:close" style="margin-top: 100px !important;" >Close</a>
+
+                                </div>
+                             
+                                <br>
+                              
+                            </div>
+                           
+                        </div>
+                    
+                          <!-- Link to open the modal -->
+            
+                    
+
+                </div>
+            </div>
+            <br>
+            <div class="row " style="justify-content: center;align-items: center;display:flex;" >
+                
+                <div class="col-lg-12 col-md-12 col-sm-12 row" style="text-align: left;justify-content:space-between;">
+                        <div class="col-lg-4 col-md-12 col-sm-12" >
+                            <span  style="font-size: 20px;max-width: 100%;text-align: center;" >
+                                <b> {{total_posts}} </b>
+                             </span>
+                            <label  style="margin: 0px;padding: 0px;font-size: 23px;font-weight: 50 !important;" >
+                            posts
+                            </label>
+                       
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12" >
+                            <span  style="font-size: 20px;max-width: 100%;text-align: center;" >
+                                <b> {{total_posts}} </b>
+                             </span>
+                            <label  style="margin: 0px;padding: 0px;font-size: 23px;font-weight: 50 !important;" >
+                            following
+                            </label>
+                        </div>
+                        <div class="col-lg-4 col-md-12 col-sm-12" >
+                            <span  style="font-size: 20px;max-width: 100%;text-align: center;" >
+                                <b> {{total_posts}} </b>
+                             </span>
+                            <label  style="margin: 0px;padding: 0px;font-size: 23px;font-weight: 50 !important;" >
+                            followers
+                            </label>
+                        </div>
+                        
+                   </div> 
+            </div>
+            <br>
+            <div style="margin: 0px;padding: 0px;" class="col-lg-12 col-md-12 col-sm-12" >
+                <label  style="margin:0px ;font-weight: 100;font-size: 20px;" >
+                    {{user.First_Name}} {{user.Last_Name}}
+                </label>
+               </div>
+            
+        </div>
+    
+    </div>
+    
+    <div class="row">
+        
+        <div class="col-lg-12 col-md-12 col-sm-12">
+                    <br>
+                    <br>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="tab col-lg-12 col-md-12 col-sm-12" role="tabpanel">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs " role="tablist">
+                                <li role="presentation"  id="1"  ><a href="profile?user_id=5&tab=1">Posts</a></li>
+                                <li role="presentation" id="2" ><a  href="profile?user_id=5&tab=2" >Saved</a></li>
+                                <li role="presentation" id="3" ><a  href="profile?user_id=5&tab=3" >Tags</a></li>
+                                <li role="presentation" id="4"  ><a  href="profile?user_id=5&tab=4" >IGTV</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content tabs ">
+                                <div class="div1"  style="display: none;justify-items: stretch;"  >
+                                            <div class="col-lg-12 col-md-12 col-sm-12 bg-dark" style="padding: 0px;margin: 0px;" >
+
+                                            {% for i in posts %}
+                                            <div style="padding: 0px;" onmouseover="showLayout('{{i.post.id}}')" onmouseout="hideLayout('{{i.post.id}}')" id="{{i.post.id}}" class="col-lg-4 bg-dark border col-md-12 col-sm-12" >
+                                                <img src="{{i.post.Image.url}}" width="100%" height="300"  alt="">  
+                                                <div class="content px-4 row" style="padding: 0px;margin: 0px;display: none;align-items: center;justify-content: center;" >
+                                                   <div  style="padding: 0px;margin: 0px;"  >
+                                                    <h1 class="text-center"  >
+                                                        <i class="fa fa-heart" >
+ 
+                                                        </i>
+                                                    </h1>
+                                                    <h4 class="text-center "  >
+                                                        {{i.likes}}
+                                                    </h4>
+                                                    
+                                                   </div>
+                                                  
+                                                   <div  style="padding: 0px;margin: 0px;" >
+                                                    <h1 class="text-center" >
+                                                        <i class="fa fa-comment" >
+    
+                                                        </i>
+                                                    </h1>
+                                                    <h4  class="text-center" >
+                                                        {{i.comments}}
+                                                    </h4>
+                                                    
+                                                   </div>
+                                                   <div  style="padding: 0px;margin: 0px;" >
+                                                    
+                                                    <h4  class="text-center" >
+                                                        {{i.post.DateTime}}
+                                                    </h4>
+                                                    
+                                                   </div>
+                                                   
+                                                  </div> 
+                                            </div>    
+                                                          
+                                            {% endfor %}
+                                            
+                                        </div>
+                                
+                                
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="Section2">
+                                    <h3>Section 2</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper, magna a ultricies volutpat, mi eros viverra massa, vitae consequat nisi justo in tortor. Proin accumsan felis ac felis dapibus, non iaculis mi varius.</p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="Section3">
+                                    <h3>Section 3</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper, magna a ultricies volutpat, mi eros viverra massa, vitae consequat nisi justo in tortor. Proin accumsan felis ac felis dapibus, non iaculis mi varius.</p>
+                                </div>
+                                <div class="div4" style="display: none;" >
+
+
+                                                <div class="col-lg-6 col-md-12 col-sm-12" >
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 text-center"  >
+                                                        <div>
+                                                            <i class="fa fa-4x fa-file-video-o" style="color: grey;" ></i>
+                                                            <br>
+                                                            <h1  style="font-weight: 100 ;" >
+                                                                Upload a vedio
+                                                            </h1>   
+                                                            <p>
+                                                                your must be between 1 and 60 minutes long
+                                                            </p> 
+                                                            <a href="upload" class="btn btn-success border text-white" >
+                                                                Upload
+                                                            </a>                   
+                                                        </div>
+                                                  
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 col-sm-12" >
+                                                                
+                                                <div class="col-lg-12 col-md-12 col-sm-12 text-center"  >
+                                                    <div>
+                                                        <i class="fa-4x fa fa-file-image-o" style="color: grey;" ></i>
+                                                        <br>
+                                                        <h1  style="font-weight: 100 ;" >
+                                                            Upload Photos
+                                                        </h1>   
+                                                        <p>
+                                                            your must be between 1 and 60 minutes long
+                                                        </p> 
+                                                        <a href="upload_photos" class="btn btn-primary border text-white" >
+                                                            Upload
+                                                        </a>                   
+                                                    </div>
+                                              
+                                                </div>
+                                                </div>
+                                                
+
+                                          
+
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+               
+            
+        </div>  
+    </div>
+</div>   
+
+</div>
+
+
+<style>
+
+.container .content {
+  position: absolute; /* Position the background text */
+  bottom: 0; /* At the bottom. Use top:0 to append it to the top */
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+  color: #f1f1f1; /* Grey text */
+  width: 100%; /* Full width */
+  height:100%;
+  display: none; /* Some padding */
+}
+p
+{
+    word-break: break-all;
+}
+
+.modal-backdrop {
+    background-color: transparent;
+}
+ .profile-custom a
+ {
+     font-size: 14px !important;
+     color: grey;
+ }
+ .profile-custom label:hover
+ {
+    color: royalblue;
+ }     
+ .profile-custom label
+ {
+     color: gray;
+     font-weight: 100 !important;
+     cursor: pointer;
+ }  
+.nav li {
+    margin-left: 15px !important;
+    float: left;
+}
+.nav
+{
+    border-bottom: solid 1px #e9e9e9 !important;
+    padding:0px
+}    a:hover,a:focus{
+    text-decoration: none;
+    outline: none;
+}
+a:link
+{
+    color: darkgray;
+}
+.tab .nav-tabs{
+    border: none;
+    margin: 0;
+}
+.tab .nav-tabs li a{
+    padding: 10px;
+    
+    font-size: 14px;
+  
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    position: relative;
+    transition: all 0.3s ease 0s;
+}
+.tab .nav-tabs li a:hover,
+.tab .nav-tabs li.active a{ border: none; }
+.tab .nav-tabs li a:before{
+    content: "";
+    width: 100%;
+    border: 1px solid #e9e9e9;
+    border-radius: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.tab .nav-tabs li a:after{
+    content: "";
+    width: 0;
+    height: 4px;
+    color: black;
+    background: grey;
+    border: 1px solid grey;
+    border-radius: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    transition: all 0.3s ease 0s;
+}
+.tab .nav-tabs li.active a:after{
+    width: 100%;
+    opacity: 1;
+}
+.tab .tab-content{
+    padding: 15px 20px;
+    margin-top: 20px;
+    font-size: 17px;
+    letter-spacing: 1px;
+    line-height: 30px;
+    position: relative;
+}
+@media only screen and (max-width: 479px){
+    .tab .nav-tabs li{
+        width: 100%;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .tab .tab-content{ margin-top: 0; }
+}
+
+</style>
+<script>
+
+function showLayout(id)
+{
+    $("#"+id).children('.content').css('display','block')
+    
+}
+function hideLayout(id)
+{
+    $("#"+id).children('.content').css('display','none')
+}
+
+$(function()
+{
+    var params = new window.URLSearchParams(window.location.search);
+    id=params.get('tab');
+    $("#"+id).addClass("active");
+
+    $(".div"+id).css('display','flex');
+    
+})
+
+   function CheckFile()
+        {
+           
+        }
+
+        function ShowImagePreview(imageUploader, previewImage) {
+            if (imageUploader.files && imageUploader.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(previewImage).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(imageUploader.files[0]);
+            }
+        }
+
+
+
+
+$(document).ready(function(){
+
+
+    $image_crop = $('#image_demo').croppie({
+    enableExif: true,
+    viewport: {
+      width:200,
+      height:200,
+      type:'square' //circle
+    },
+    boundary:{
+      width:300,
+      height:300
+    }
+  });
+
+  $("#picture").bind('change', function () {         
+                //this.files[0].size gets the size of your file.    
+
+            var reader = new FileReader();
+            reader.onload = function (event) {
+            $image_crop.croppie('bind', {
+                url: event.target.result
+            }).then(function(){
+                console.log('jQuery bind complete');
+            });
+            }
+            reader.readAsDataURL(this.files[0]);
+            $('#image_demo').removeClass('collapse');
+            $('#imagePreview').addClass('collapse');
+
+                
+
+
+            $("#picname").html(this.files[0].name);
+            });
+            
+    
+    $("#btn-upload").on('click' , function(e){
+        $('.profile-loader').removeClass('collapse');
+       
+       
+        
+        $image_crop.croppie('result', {
+      type: 'canvas',
+      size: 'viewport'
+    }).then(function(response){
+        $.ajax({
+        type:'POST',
+        url : 'profile',
+        data : {image: response , "csrfmiddlewaretoken" : "{{csrf_token}}"} ,
+
+        success:function(json){
+
+            location.reload();
+        },
+        error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+    });
+    })
+
+
+});
+
+
+
+
+
+$("#open").on('click',function()
+{
+    $("#ex1").modal({
+  escapeClose: false,
+  clickClose: false,
+  showClose: false
+});
+});
+         
+            });
+
+   
+</script>
+<style>
+    .username
+    {
+        justify-content: center;
+    }
+</style>
+{% endblock content %}

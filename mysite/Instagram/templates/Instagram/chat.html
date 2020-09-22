@@ -1,0 +1,655 @@
+
+{% extends 'Instagram/layout.html' %}
+{% load static %}
+{% block content %}
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.js" integrity="sha512-aGWPnmdBhJ0leVHhQaRASgb0InV/Z2BWsscdj1Vwt29Oic91wECPixuXsWESpFfCcYPLfOlBZzN2nqQdMxlGTQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA==" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.css" integrity="sha512-0Nyh7Nf4sn+T48aTb6VFkhJe0FzzcOlqqZMahy/rhZ8Ii5Q9ZXG/1CbunUuEbfgxqsQfWXjnErKZosDSHVKQhQ==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA==" crossorigin="anonymous" />
+
+<div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" >
+            <div id="SideDiv" class="col-lg-3 col-md-12 col-sm-12 border" style="height: 93%;overflow-y: auto;width: 100%;overflow-x: hidden;" >
+                   <div class="col-lg-12 col-md-12 col-sm-12" style="top: 0;padding: 20px !important;" >
+                       <div class="form-control" >
+                           <i class="fa fa-search" >
+
+
+                           </i>
+                        <input type="text" id="searchchatsinput" style="border: none;outline: none;"  placeholder="Search user" >
+                       </div>
+                   </div> 
+                   <div class="col-lg-12 col-md-12 col-sm-12 py-4 "  >
+                    <table class="table col-lg-12 col-md-12 col-sm-12 py-4" id="searchchatslist" cellSpacing="0" cellPadding="0" border="0" style="margin: 0px;" >
+                                  
+                    {% for i in users %}
+                                 <tr>
+                                        <td  class="detial{{i.id}}" style="padding: 0px;margin: 0px;" >
+                                            <a href="chat?id={{i.id}}"  >
+                                                {% if i.id == id  %}
+                                                <div  class="col-lg-12 col-md-12 col-sm-12 py-4 active" style="padding: 10px !important;display: flex;justify-content: left;" >
+                                                {% else %}
+                                                <div  class="not-active col-lg-12 col-md-12 col-sm-12 py-4" style="padding: 10px !important;display: flex;justify-content: left;" >
+                                                {% endif %} 
+                                                       <div class="col-lg-2 col-md-4 col-sm-4 text-right" id="{{i.id}}" style="padding: 0px;" >
+                                                           <img src="{{i.image}}" width="60" height="60"  style="border-radius: 120px;" alt="">
+                                                       </div>
+                                                       <div class="col-lg-10 col-md-8 col-sm-8" style="display: flex;align-items: center;text-align: left;" >
+                                                        <div  style="display: inline-block;" >   
+                                                            <h4 style="padding: 0px !important;" >
+                                                                <b  >
+                                                                    {{i.Username}}
+                
+                                                                </b>
+                                                            </h4>
+                                                            <h4 id="last_message{{i.id}}" style="overflow: hidden;;width: 50%;font-family:Verdana, Geneva, Tahoma, sans-serif;"  >...</h4>
+                                                        </div>            
+                                                       
+                                                       </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                              
+                              
+                            {% endfor %}                                
+                        </table>
+                    </div>  
+           
+            </div>
+            
+            <div class="col-lg-9 col-md-12 col-sm-12" style="height: 90%;padding: 0px;overflow: hidden;">
+
+                        <div class="col-lg-12  col-md-12 col-sm-12" >    
+                           
+                           {% for i in users %}
+                                    {% if i.id == id %}
+                                            <div class="col-lg-12 col-md-12 col-sm-12 card" style="padding: 10px !important;" >
+                                                <div class="row" >
+                                                    <div class="col-lg-1 col-md-12 col-sm-12 " style="text-align: right;"  >
+                                                        <img src="{{i.image}}" width="60" height="60" style="border-radius: 420px;" alt="">
+                                                    </div>
+                                                    <div class="col-lg-11 col-md-12 col-sm-12" style="padding: 0px;display: flex;align-items: center;"  >
+                                                        <div  style="display: inline-block;" >
+                                                        <h4  style="margin: 0px;padding:0px;" >
+                                                                <b>
+                                                            {{i.Username}}
+                                                        </b>
+                                                        </h4>     
+                                                       
+                                                        <label style="color: gray;" id="onlineStatus" for="">...</label>
+                                                    </div>
+
+                                                    </div>
+                                                </div>  
+                                            </div>      
+                                    {% endif %}
+                           {% endfor %}
+                         
+                        </div>
+
+                        <div class="border message-list-parent" style="overflow: auto;height: 90%;border-color: white !important;" >
+                            <ul class="message-list" >
+                                {% if id == 0 %}
+                                       
+                                <li>
+                                           <div  >
+                                               
+                                                    <section class="text-center"  style="position: absolute;top: 30%;left: 30%;right: 30%;" >
+                                                        <i class="far fa-comments" style="font-size: 100px;" ></i>
+    
+                                                        <h2  >                                                         
+                                                                Start conversation witrh friends
+                                                            </h2>
+                                                            <p style="font-size: 16px;" >
+                                                                connect with freinds and share personal messages
+                                                            </p>
+                                                    </section>
+                                           </div>
+                                       </li>
+                                       {% endif %}     
+                            </ul>
+                            <br>
+                            <br>
+                            <br>    
+                        </div>
+                 
+                        
+                         <div class="col-lg-12 col-md-12 col-sm-12 " style="display: flex;justify-content: center;" >
+
+                   
+                      
+                        <div style="position: fixed;bottom: 0;padding: 15px !important;width: 70%;" >
+                            <div class="row" style="justify-content: space-between;" >
+                                
+                              
+                                 <input type="hidden" id="reciever_id" name="id" value="{{id}}" >   
+                                <div class="col-lg-11 md-lg-12 sm-lg-12 row "  >
+                                    <textarea minlength="1"  name="message"  placeholder="write message" class="message-box form-control"  style="width: 100%;display: inline-block;"></textarea>
+                                </div>    
+            
+                                <div class="row border col-lg-1 md-lg-12 sm-lg-12" style="justify-content: center;align-items: center;">
+                                    <button type="button" id="{{id}}" class="btn-message" style="border: none;outline: none;background-color: transparent;" >
+                                        <i class="fa fa-angle-right fa-4x" style="font-weight: 700;" >
+    
+                                        </i>
+                                    </button>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>   
+                    
+
+            </div>
+</div>    
+
+<style>
+    .reciever
+    {
+        background-color: gainsboro;
+        border-radius: 15px;
+        max-width: 70%;
+        display: inline-block;
+        border-radius: 150px;
+        padding: 15px;
+    }
+
+    .sender
+    {
+        color: white;
+        max-width: 70%;
+        background-color: royalblue;
+        border-radius: 150px;
+        padding: 15px;
+        display: inline-block;
+    }
+    .reciever label , .sender label
+    {
+        font-weight: 100;
+        font-size: 20px;
+        margin: 0px;
+    }
+    .message-list li
+    {
+        margin-top: 5px;
+    }
+.message-list 
+{
+    list-style-type: none;
+    padding: 10px;
+    margin: 0px;
+}   
+.btn-message:visited
+{
+    background-color: royalblue;
+}
+
+    .active
+    {
+        background: rgba(27, 27, 27, 0.11);
+        border-bottom: solid 5px darkgrey;
+
+    }
+
+    .not-active label ,.not-active   h4
+    {
+        color: gray;
+    }
+    
+    .col-lg-12 , .col-lg-3 , .jumbotron
+    {
+        padding: 0px !important;
+    }
+    a
+    {
+        color: black !important;
+    }
+    textarea
+    {
+        resize: none;
+    }
+</style>
+
+<script>
+
+
+
+
+    
+    $(document).ready(function()
+    {
+
+
+        $("#searchchatsinput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#searchchatslist tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+        $(".btn-message").on( 'click' , function(e){
+            sendMessage();
+        });
+
+        $(".message-box").on( 'keyup' , function(e){
+            
+                seen_all_messages();  
+        });
+
+        function seen_all_messages()
+        {   
+            var params = new window.URLSearchParams(window.location.search);
+            id=params.get('id');
+            if(id != "0")
+            {
+                    $.ajax({
+                    type:'GET',
+                    url : 'seen_all_messages?id='+id,
+                    success:function(j){
+                            
+                    },
+                    error : function(xhr,errmsg,err) {
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+                }); 
+            }
+        }
+        
+        //function runs when enter is pressede
+        $(document).on('keypress',function(e) {
+            if(e.which == 13) {
+                //var message = $('#messageInput').val();
+                  
+                sendMessage();
+
+            }
+        });
+
+        //function to send messages
+        function sendMessage()
+        {
+            //save_message
+
+            var message = $('.message-box').val();
+           
+            var id = $('#reciever_id').val();
+            
+            let data = {};
+            data.message = message;
+            data.id = id;
+            if(message.trim().length > 0)
+            {
+            data.csrfmiddlewaretoken = '{{ csrf_token }}';
+
+            var currentdate = new Date(); 
+                var datetime = "" + currentdate.getDate() + ""
+                + (currentdate.getMonth()+1)  + "" 
+                + currentdate.getFullYear() + ""  
+                + currentdate.getHours() + ""  
+                + currentdate.getMinutes() + "" 
+                + currentdate.getSeconds()+""
+                + currentdate.getMilliseconds()+""
+
+                  $('.message-list').append(
+                               "<li  style='text-align:right' >"+
+                                    "<div id='"+datetime+"' class='sender'>"+
+                                        "<label>"+
+                                            message+
+                                        "</label>"+
+                                       ""+
+                "</div></li>");
+                
+
+            $.ajax({
+            type:'POST',
+            url : 'save_message',
+            data : data , 
+            dataType: "json",
+            success:function(j){
+                $('.message-box').val("");
+                $("#"+datetime).find('i').attr('id',j.id);
+                // $("#"+datetime).find('i').html(j.id);
+                
+                // $('.message-list').append(
+                //                "<li  style='text-align:right' >"+
+                //                     "<div class='sender' >"+
+                //                         "<label>"+
+                //                             message+
+                //                         "</label>"+
+                //                        "</div>"+
+                //                 "</li>");
+                ScrollToView();
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        }); 
+    } 
+        }
+
+        //fucntion to get messages
+window.setInterval(function(){
+   
+            status_message();
+            get_message();
+            get_last_message();
+            user_status();
+                
+
+}, 100);  
+
+function get_last_message()
+{
+
+    $.ajax({
+            type:'GET',
+            url : 'get_last_message',
+            success:function(j){
+                    $.each(j.messageslist , function(i,j)
+                    {
+                        if(j.Status == "seen")
+                        {
+                            if(j.Type == "image")
+                            {
+                                $("#last_message"+j.Sender_id).css('font-weight','100');
+                           $("#last_message"+j.Sender_id).text("attachment");
+                           $("#last_message"+j.Reciever_id).text("attachment");         
+                            } 
+                            else
+                            {
+                                $("#last_message"+j.Sender_id).css('font-weight','100');
+                           $("#last_message"+j.Sender_id).text(j.Description);
+                           $("#last_message"+j.Reciever_id).text(j.Description);
+                            }
+                 
+                        }
+                        else
+                        {
+                           
+                            if(j.Type == "image")
+                            {
+                            $("#last_message"+j.Sender_id).css('font-weight','800');
+                            $("#last_message"+j.Sender_id).text("attachment").css('color' , 'black');
+                            $("#last_message"+j.Reciever_id).text("attachment").css('color' , 'black'); 
+                            }
+                            else
+                            {
+                                $("#last_message"+j.Sender_id).css('font-weight','800');
+                            $("#last_message"+j.Sender_id).text(j.Description).css('color' , 'black');
+                            $("#last_message"+j.Reciever_id).text(j.Description).css('color' , 'black'); 
+                                                   
+                            }
+                              
+                        }
+                      
+                        
+                    });
+            },
+            error : function(xhr,errmsg,err) {
+                 // provide a bit more info about the error to the console
+        }
+        }); 
+}
+
+function user_status()
+{
+    var params = new window.URLSearchParams(window.location.search);
+    id=params.get('id');
+    $.ajax({
+            type:'GET',
+            url : 'user_status?id='+id,
+            success:function(j){
+               
+                    if(j.status == true)
+                    {
+                        $("#onlineStatus").text("online");
+                    }
+                    else
+                    {
+                        $("#onlineStatus").text("offline");                 
+                    }
+            },
+            error : function(xhr,errmsg,err) {
+                $("#onlineStatus").text("offline"); // provide a bit more info about the error to the console
+        }
+        }); 
+}
+
+$(function()
+        {
+            
+            ScrolllistToTop();
+           
+            getAllMessages();
+        });
+
+function getAllMessages()
+{
+    var params = new window.URLSearchParams(window.location.search);
+    id=params.get('id');
+    if(id != "0")
+    {
+
+    $.ajax({
+            type:'GET',
+            url : 'get_all_messages?id='+id,
+            success:function(j){
+                    $.each(j.messages , function(i , j)
+                    {
+                        
+                        if(j.Reciever.id == id)
+                        {
+                            if(j.Type == "image")
+                            {
+                                $('.message-list').append(
+                               "<li style='text-align:right' >"+
+                                "<a href='single_post?id="+j.Url+"' ><div style='border-radius:10px;' class='sender'>"+
+                                        " <img width='100%'  src="+j.Description+" /> "+
+                                                                         
+                             "</div> </a></li>"); 
+                            }
+                            else
+                            {
+                                $('.message-list').append(
+                               "<li  style='text-align:right' >"+
+                                    "<div  class='sender'>"+
+                                        "<label>"+
+                                            j.Description+
+                                        "</label>"+
+                                       
+                                "</div></li>"); 
+                            }
+                          
+                        }    
+                        else
+                        {
+                            if(j.Type == "image")
+                            {
+                                $('.message-list').append(
+                               "<li>"+
+                                    "<a href='single_post?id="+j.Url+"' ><div style='border-radius:10px;' class='reciever'>"+
+                                        " <img width='100%'  src="+j.Description+" /> "+
+                                                                         
+                             "</div> </a></li>");   
+                            }
+                            else
+                            {
+                                $('.message-list').append(
+                               "<li>"+
+                                    "<div  class='reciever'>"+
+                                        "<label>"+
+                                            j.Description+
+                                        "</label>"+
+                                       
+                             "</div></li>");   
+                            }
+                            
+
+                        }   
+                          ScrollToView();
+                    });
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        }); 
+}
+}        
+
+function get_message()
+{
+    var params = new window.URLSearchParams(window.location.search);
+    id=params.get('id');
+    if(id != "0")
+    {
+
+   
+    $.ajax({
+            type:'GET',
+            url : 'get_messages?id='+id,
+            success:function(j){
+                    $.each(j.messages , function(i , j)
+                    {
+                        if(j.Reciever.id == id)
+                        {
+                            if(j.Type == "image")
+                            {
+                                $('.message-list').append(
+                               "<li style='text-align:right' >"+
+                                "<a href='single_post?id="+j.Url+"' ><div style='border-radius:10px;' class='sender'>"+
+                                        " <img width='100%'  src="+j.Description+" /> "+
+                                                                         
+                             "</div> </a></li>"); 
+                            }
+                            else
+                            {
+                                $('.message-list').append(
+                               "<li  style='text-align:right' >"+
+                                    "<div  class='sender'>"+
+                                        "<label>"+
+                                            j.Description+
+                                        "</label>"+
+                                       
+                                "</div></li>"); 
+                            }
+                          
+                        }    
+                        else
+                        {
+                            if(j.Type == "image")
+                            {
+                                $('.message-list').append(
+                               "<li>"+
+                                "<a href='single_post?id="+j.Url+"' ><div style='border-radius:10px;' class='reciever'>"+
+                                        " <img width='100%'  src="+j.Description+" /> "+
+                                                                         
+                             "</div> </a></li>");   
+                            }
+                            else
+                            {
+                                $('.message-list').append(
+                               "<li>"+
+                                    "<div  class='reciever'>"+
+                                        "<label>"+
+                                            j.Description+
+                                        "</label>"+
+                                       
+                               "</div></li>");   
+                            }
+                            
+
+                        }  
+                          ScrollToView();
+                    });
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        }); 
+    }
+}
+
+function status_message()
+{
+    var params = new window.URLSearchParams(window.location.search);
+    id=params.get('id');
+
+    $.ajax({
+            type:'GET',
+            url : 'status_message?id='+id,
+            success:function(j){
+                    $.each(j.messages , function(i , j)
+                    {
+                     
+                          $("#"+j.id).removeClass('fa-circle-o-notch');
+                          $("#"+j.id).removeClass('fa-spin');
+                          
+                    });
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });  
+}
+
+
+function ScrolllistToTop()
+{
+        
+    var params = new window.URLSearchParams(window.location.search);
+            id=params.get('id');
+
+            // $("#SideDiv").animate({
+            //     scrollTop: $("#"+id).offset().bottom
+            // }, 100);
+            document
+            .getElementById(""+id)
+            .scrollIntoView({
+    behavior: "smooth", // or "auto" or "instant"
+    block: "end" // or "end"
+});
+}
+
+
+        // function Seen()
+        // {
+        //     var params = new window.URLSearchParams(window.location.search);
+        //     id=params.get('id');
+        //     if(id != "0")
+        //     {
+        //             $.ajax({
+        //             type:'GET',
+        //             url : 'message_seen?id='+id,
+        //             success:function(j){
+                            
+        //             },
+        //             error : function(xhr,errmsg,err) {
+        //             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        //         }
+        //         }); 
+        //     }
+        // }
+
+
+
+
+
+    });
+
+    // $('.message-box').emojioneArea({
+    //         pickerPosition:'top'
+    // });
+
+
+function ScrollToView()
+{
+   
+    $(".message-list-parent").scrollTop($(".message-list-parent")[0].scrollHeight);
+    // var objDiv  =  document
+    //         .getElementsByClassName("message-list-parent");
+    //         objDiv.scrollTop = objDiv.scrollHeight;
+}
+
+</script>
+
+{% endblock content %}

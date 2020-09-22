@@ -1,0 +1,192 @@
+
+{% extends 'Instagram/layout.html' %}
+{% load static %}
+{% block content %}
+<br>
+         <p  class="text-center" style="font-size: 30px;font-family:Arial;font-weight: lighter !important;" >
+             Add new Photos
+         </p>         
+         <hr>
+<div class="col-lg-12 col-md-12 col-sm-12" >
+         <div class="col-lg-12 col-sm-12 col-md-12">
+            <form method="POST" enctype="multipart/form-data" id="post-form">
+
+               
+                  <div class="col-lg-4 col-sm-12 col-md-12" >
+
+                    <div class="col-lg-12 col-sm-12 col-md-12" >
+                            {% csrf_token %}                          
+                        <div class="col-lg-12 col-md-12 col-sm-12 " >
+                                 <h3 class="text-center" style="padding: 0px;margin: 0px;" >
+                                     <b>
+                                        Details
+                                     </b>
+                                 </h3>                                   
+                                 <input type="text" placeholder="title" name="title" class="form-control" style="padding:25px !important;" required >
+                                 <br>
+                                 <textarea  rows="10" cols="6" placeholder="Describe about post..."  name="description"  class="form-control" required></textarea>
+                                    <br>
+                                 <button class="btn btn-lg btn-primary btn-block" type="submit" > Upload </button>
+                  
+                        </div>      
+                        <br>
+                    <div class="col-lg-12 co-md-12 col-sm-12 text-center my-4"  >
+                        {% if messages %}
+                        <ul class="messages" style="padding: 0px !important;margin: 0px !important;" >
+                            {% for message in messages %}
+                            <li  {% if message.tags %} class="alert alert-{{ message.tags }} " {% endif %}> {{ message }} </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                     </div> 
+                  </div>
+        
+                  </div> 
+                  <div class="col-lg-8 col-sm-12 col-md-12"  style="background-color: white;padding: 0px;" >  
+                    
+                    {% csrf_token %}
+                    
+                    <div class="col-lg-12 col-sm-12 col-md-12 py-2" style="padding: 0px;margin:0px;" >
+                        <label onclick="CheckFile()" class="btn btn-primary pull-right" for="images"  >
+                            Select from Computer   
+                            <input accept=".jpg , .png" onchange="upload(this)" type="file" name="images" id="images" class="collapse" multiple >
+                        </label> 
+                    </div>
+                    <br>
+                    <br>
+
+                    <div  class="col-lg-12 col-sm-12 col-md-12 photos-box" style="border: dashed gray 2px;background-color: #f6f6f6;padding: 20px;" >
+                        <div class="text-center placeholder-box"  >
+                        <i class="fa-4x fa fa-image"  style="color: gray;font-weight: lighter !important;" >
+
+                           </i>   
+                           <h4 style="font-weight: 500; " >
+                               upload new photos
+                           </h4>    
+         
+                        </div>
+                    
+                    </div>   
+                 
+              </div>   
+            
+                </form>
+         </div>
+   
+</div>    
+
+
+
+
+<style>
+p
+{
+    word-break: break-all;
+}
+
+
+</style>
+<script>
+$(document).ready(function(){
+
+});
+var allFiles=[]         
+function deletePicture(tag)
+        {       
+                var ele = document.getElementById("images");
+                let fileArray = Array.from(ele.files);
+                $(tag).parents('.col-lg-2').remove();
+                var value1 = parseInt($(tag).siblings('img').attr('id'));
+                fileArray.splice(fileArray,value1+1);
+                console.log(document.getElementById("images"));
+                if(fileArray.length == 0)
+                {
+                    $('.placeholder-box').removeClass('collapse');  
+                    $("#images").replaceWith(ele);
+                }
+        } ;  
+
+        
+
+ function upload(vedio)
+ {
+    
+    if (vedio.files && vedio.files[0]  ) {
+       
+        // $(".vedio-loader").removeClass('collapse');  
+        $('.placeholder-box').addClass('collapse');  
+        var j = 0;
+        for(i=0;i<vedio.files.length;i++)
+        {
+
+             //Equivalent: $(document.createElement('img'))
+            
+            var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = $('<img id="'+j+'"  width="100%" height="200" class="bg-dark" >');
+                    var div = $('<div class="col-lg-2 bg-dark col-md-12 col-sm-12" style="display:flex;align-items:center;padding:0px" > <i id="i"  class="fa fa-times-circle fa-2x" onclick="deletePicture(this)" style="background-color:brown;padding:0px;position:absolute;color:white;border-radius:30px;top:2px;right:2px" ></i> </div>');
+                    div.append(img);
+                   
+                    $('.photos-box').append(div);
+                    
+                    img.attr('src' , e.target.result);
+                    j=j+1;
+                    
+                    
+                }
+                reader.readAsDataURL(vedio.files[i]);
+        }
+
+
+        
+      
+        var formData = new FormData(document.getElementById("post-form"));
+
+        //     $.ajax({
+        //         type: 'POST',
+        //         url : 'upload_vedio_file',
+        //         data : formData ,
+        //         processData: false,
+        //         contentType: false,
+        //         success: function (data) {
+                        
+        //             var video = document.getElementById('video');
+        //             $("#video").removeClass('collapse');
+        //             $("#lblvedio").addClass('collapse');
+                    
+        //             var source = document.getElementById('source');
+
+
+        //             source.setAttribute('src', '/media/vedios/'+data.file);
+
+        //             setTimeout(function() {  
+        //                 video.pause();
+
+        //                 source.setAttribute('src', '/media/vedios/'+data.file); 
+        //                 $("#vedioname").val(data.file);    
+        //                 video.load();
+        //                 video.play();
+        //                 $(".vedio-loader").addClass('collapse');
+        //             }, 3000);
+                        
+                      
+        //         },
+        //         error: function(data) {
+        //             $(".error").removeClass('collapse');
+        //             $(".vedio-loader").addClass('collapse');
+        //         }
+        // });
+    }    
+    
+ }   
+
+
+   
+</script>
+<style>
+    .username
+    {
+        justify-content: center;
+    }
+</style>
+{% endblock content %}

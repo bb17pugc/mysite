@@ -1,0 +1,411 @@
+{% extends 'Instagram/layout.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12"  >  
+        <div class="container" >
+            <div class="col-lg-12 col-md-12 col-sm-12 " style="padding:0px;margin: 0px;" >
+                {% if messages %}
+                    {% for message in messages %}
+                            <p class="text-center alert alert-{{message.tags}}" style="margin: 0px;" >
+                                <b>{{message}}</b>
+                            </p>
+                    {% endfor %}
+                {% endif %}
+        </div>  
+            <div class="col-lg-3 col-md-12 col-sm-12" >
+                    <div class="card" style="height: 100vh;" >
+                            <ul class="profile-menu" >
+                                <li>
+                                    <a href="setting" id="setting">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="profile_edit" id="profile_edit">Edit Profile</a>
+                                </li>
+                                <li>
+                                    <a href="password" id="password">Change Password</a>
+                                </li>
+                                <li>
+                                    <a href="verify" id="verify">Verify Account</a>
+                                </li>
+                                <li>
+                                    <a href="deactivate" id="deactivate">Deactivate Account</a>      
+                                </li>
+                            </ul>
+                          
+                            
+                           
+                           
+                           
+                            
+                    </div>
+            </div>
+            <div class="col-lg-9 col-md-12 col-sm-12 card" style="height: 100vh;" >
+                    <div id="settingdiv" class="collapse text-center col-lg-12 col-md-12 col-sm-12" >
+                                <h2 style="font-weight: lighter;" >Profile</h2>
+                                <hr>
+                               <div>
+                                   <img class="border" style="border-radius: 400px;width: 200px;height: 200px;" src="{{profile.image}}"  alt="">
+                               </div>  
+                               <br>  
+                               <div class="col-lg-12 col-md-12 col-sm-12" >
+                                    <table class="table" style="table-layout: fixed;"  >
+                                        <tr>
+                                            <td>
+                                                <h4 style="margin: 0px;color: lightslategray;" >
+                                                    name
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4 style="margin: 0px;font-weight: 100;" >
+                                                {{profile.First_Name}} {{profile.Last_Name}}
+                                            </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h4 style="margin: 0px;color: lightslategray;" >
+                                                    Email
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4 style="margin: 0px;font-weight: 100;" >
+                                                {{profile.Email}}
+                                            </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h4 style="margin: 0px;color: lightslategray;" >
+                                                    Username
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4 style="margin: 0px;font-weight: 100;" >
+                                                {{profile.Username}}
+                                            </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h4 style="margin: 0px;color: lightslategray;" >
+                                                    date of birth
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4 style="margin: 0px;font-weight: 100;" >
+                                                {{profile.DateOfBirth}}
+                                            </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h4 style="margin: 0px;color: lightslategray;" >
+                                                    about me
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4 style="margin: 0px;font-weight: 100;" >
+                                                {{profile.AboutMe}}
+                                            </h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h4 style="margin: 0px;color: lightslategray;" >
+                                                    Verification
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                <h4 style="margin: 0px;font-weight: 100;" >
+                                                    {% if profile.Is_Email_Verified %}
+                                                        <label for="" class="text-success">Verified</label>
+                                                    {% else %}
+                                                    <label for="" class="text-danger">Not Verified</label>
+                                                    {% endif %}
+                                            </h4>
+                                            </td>
+                                        </tr>
+                                         
+                                    </table>
+                                
+                               </div>
+                    </div>
+                    <div id="profile_editdiv" class="collapse text-center col-lg-12 col-md-12 col-sm-12" >
+                        <h2 style="font-weight: lighter;" >Edit Profile</h2>
+                        <hr>
+                           
+                           <div class="col-lg-12 col-md-12 col-sm-12" >
+                               <form action="" method="POST" >
+                                {% csrf_token %}
+                                <table class="table" style="table-layout: fixed;"  >
+                                    <tr>
+                                        <td>
+                                            <h4 style="margin: 0px;color: lightslategray;" >
+                                                first name
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="firstname" pattern="[A-Z a-z]+" placeholder="write name e.g abc...." value="{{profile.First_Name}}  " class="form-control" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4 style="margin: 0px;color: lightslategray;" >
+                                                last name
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="lastname" value="{{profile.Last_Name}}  " pattern="[A-Z a-z]+" placeholder="write name e.g abc...." class="form-control" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4 style="margin: 0px;color: lightslategray;" >
+                                                email
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <input type="email" name="email" value="{{profile.Email}}"  class="form-control" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4 style="margin: 0px;color: lightslategray;" >
+                                                username
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <input pattern="\S+\S+\S+" placeholder="user name should not contain white space" type="text" name="username" value="{{profile.Username}}  " class="form-control" required>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4 style="margin: 0px;color: lightslategray;" >
+                                                phone
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="phone" value="{{profile.Phone}}" class="form-control" required>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4 style="margin: 0px;color: lightslategray;" >
+                                                date of birth
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <input type="date" name="dateofbirth" value="{{profile.DateOfBirth}}" class="form-control" >
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4 style="margin: 0px;color: lightslategray;" >
+                                                about me
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            <textarea type="text" name="aboutme"  class="form-control" style="resize: none;" rows="5" > {{profile.AboutMe}}   </textarea>
+                                        </td>
+                                    </tr>
+                                   <tr>
+                                       <td colspan="2"  >
+                                            <button class="pull-right btn-lg btn btn-success" type="submit" >Save</button>
+                                       </td>
+                                   </tr>
+                                     
+                                </table>
+                            </form>
+                           </div>
+                </div>
+
+
+                <div id="passworddiv" class="collapse text-center col-lg-12 col-md-12 col-sm-12" >
+                    <h2 style="font-weight: lighter;" >Change Password</h2>
+                    <hr>
+                       
+                       <div class="col-lg-12 col-md-12 col-sm-12" >
+                           <form action="" method="POST" >
+                            {% csrf_token %}
+                            <table class="table" style="table-layout: fixed;"  >
+                                <tr>
+                                    <td>
+                                        <h4 style="margin: 0px;color: lightslategray;" >
+                                                old password
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <input type="password" name="currentpassword"  placeholder="write old password"  class="form-control" required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h4 style="margin: 0px;color: lightslategray;" >
+                                            new password
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <input type="password" minlength="7" name="newpassword"  placeholder="new password" class="form-control" required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h4 style="margin: 0px;color: lightslategray;" >
+                                            confirm password
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <input type="password" minlength="7" name="newconfirmpassword"  placeholder="confirm new password" class="form-control" required>
+                                    </td>
+                                </tr>
+                               
+                               <tr>
+                                   <td colspan="2"  >
+                                        <button class="pull-right btn-lg btn btn-success" type="submit" >Change</button>
+                                   </td>
+                               </tr>
+                                 
+                            </table>
+                        </form>
+                       </div>
+            </div>
+
+<div id="deactivatediv" class="collapse text-center col-lg-12 col-md-12 col-sm-12" >
+                    <h2 style="font-weight: lighter;" >Deactivate Account</h2>
+                    <hr>
+                      <h4>
+                          If you deactivate your account your friends will not be able to see your profile
+                      </h4>
+                      <b>
+                          Are you sure to deactivate your account
+                      </b>
+                      <br>
+                      <br>
+                      <a href="deactivate" class="btn btn-danger btn-lg" >Deactivate My Account</a> 
+
+            </div>
+
+            {% if status == True %}
+                        
+            <div id="verifydiv" class="collapse text-center col-lg-12 col-md-12 col-sm-12" >
+                <h2 style="font-weight: lighter;" >Verify Account</h2>
+                <hr>
+                   <div class="col-lg-12 col-md-12 col-sm-12" >
+                      
+                        <div class="card text-center shadow" style="margin: 50px;"  >
+                            <br>   
+                            <i class="fa fa-check" style="font-size: 70px;color:green;" >
+
+                                </i>    
+                            <h4>
+                                    Your account is verified
+                                </h4>
+                                <br>
+                                <div class="text-center" >
+                                </div>
+                                  <br>  
+                        </div>    
+                 
+                   </div>
+
+                  
+        </div>
+     
+            {% else %}
+
+            <div id="verifydiv" class="collapse text-center col-lg-12 col-md-12 col-sm-12" >
+                <h2 style="font-weight: lighter;" >Verify Account</h2>
+                <hr>
+                   <div class="col-lg-12 col-md-12 col-sm-12" >
+                       <form action="" method="POST" >
+                        {% csrf_token %}
+                        <div class="card text-center shadow" style="margin: 50px;"  >
+                            <br>   
+                            <i class="fa fa-warning" style="font-size: 70px;color:orange;" >
+
+                                </i>    
+                            <h4>
+                                    To verify your account,we will send code yo your email account if you want click below
+                                </h4>
+                                <br>
+                                <div class="text-center" >
+                                    <button id="btnSendMail" class="btn btn-success" style="width: 40%;" >
+                                        Send Confirmation Link
+                                    </button>
+                                </div>
+                                  <br>  
+                        </div>    
+                    </form>
+                   </div>
+
+                  
+        </div>
+
+
+            {% endif %}
+            </div>  
+            
+    </div>
+</div>
+
+<style>
+    .alert-error
+    {
+    color: white;
+    background-color: red;
+    }
+    td
+    {
+        word-break: break-all;
+        border: none !important;
+        padding: 20px !important;
+        border-bottom: solid 1px #eee !important;
+    }
+    .active
+    {
+        border-left: solid 2px royalblue;
+    }
+    .profile-menu
+    {
+        list-style-type: none;
+        padding: 0px;
+        margin: 0px;
+    }
+    .profile-menu li
+    {
+        padding: 0px;
+        display: block;
+    }
+    .profile-menu a
+    {
+        display: block;
+        padding: 20px;
+    }
+    
+     .col-lg-12 , .col-lg-3 , .col-lg-9
+     {
+         padding: 0px !important;
+     }
+</style>
+
+<script>
+
+    $(document).ready(function()
+    {
+        $("#btnSendMail").on('click' , function()
+        {
+            $('.parent-loader').removeClass('collapse');
+        });
+    })
+
+    $(function(){
+         var url = window.location.pathname.split('/')[2];
+         $("#"+url).addClass('active');
+         $("#"+url+"div").removeClass('collapse');   
+     });
+</script>
+{% endblock content %}

@@ -1,0 +1,209 @@
+
+{% extends 'Instagram/layout.html' %}
+{% load static %}
+{% block content %}
+<div class="col-lg-12 col-md-12 col-sm-12" >
+ 
+         <p  class="text-center" style="font-size: 30px;font-family:Arial;font-weight: lighter !important;" >
+             Add new IGTV Vedio
+         </p>         
+         <hr>
+         <div class="col-lg-12 col-sm-12 col-md-12">
+            
+                  <div class="col-lg-4 col-sm-12 col-md-12 border"  style="background-color: #f6f6f6;padding: 0px;" >  
+                    <div class="collapse vedio-loader" style="background-color: transparent;width: 100%;overflow: hidden;" >
+                        <div style="width: 100%;background-color: transparent;overflow: hidden;" >
+                            <div class="loader" ></div>
+                            <p class="text-center" >
+                                Uploading...
+                            </p>
+                        </div>  
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12 text-center py-4 error collapse" >
+                        <b style="color: brown;" >
+                            Upload error.Try again
+                         </b>
+                    </div>
+                    <video class="collapse" id="video" width="100%" style="background-color: black;" height="70%" controls>
+                            <source codecs="avc1.42E01E, mp4a.40.2" id="source" style="height: 100%;" ></source>
+                      </video>
+                      <form method="POST" enctype="multipart/form-data" id="post-form">
+                        {% csrf_token %}
+                        <label onclick="CheckFile()" for="vedio" id="lblvedio" class="col-lg-12 col-sm-12 col-md-12 " style="height: 70%;"  >
+                            <input accept=".mp4" onchange="upload(this)" type="file" name="vedio" id="vedio" class="collapse" >
+                            <div  class="col-lg-12 col-sm-12 col-md-12 " style="display:flex;align-items:center;justify-content:center; height: 100%;" >
+                                <div class="text-center" >
+                                <i class="fa fa-file"  style="font-size: 80px;color: goldenrod;font-weight: lighter !important;" >
+
+                                   </i>   
+                                   <br>
+                                   <h4 style="font-weight: 500; " >
+                                       click to upload 
+                                   </h4>    
+                                   <p style="font-weight: 100;color: grey;" >
+                                    Your vedio should be atleast 1 to 60m
+                                    landscape or patriot and less than 3.6GB  
+                                  </p>                      
+                                </div>
+                            
+                            </div>
+                        </label>    
+                      </form>  
+                  </div>  
+                  <div class="col-lg-8 col-sm-12 col-md-12" >
+
+                    <div class="col-lg-12 col-sm-12 col-md-12" >
+                        <form method="POST" enctype="multipart/form-data" id="post-form">
+                            {% csrf_token %}                          
+                        <label for="picture" onclick="CheckFile()" id="lblPic" class="btn btn-defualt border px-2 btn-lg" style="padding:5px;">
+                            <input onchange="ShowImagePreview(this,document.getElementById('imagePreview'))" accept=".png , .jpg" type="file" id="picture" name="picture" style="display: none;" />
+                            <img  src="/media/images/a.png"  width="200" height="200" id="imagePreview">
+                        </label>
+                        <div class="col-lg-12 col-md-12 col-sm-12" >
+                                 <h3>
+                                     <b>
+                                        Details
+                                     </b>
+                                 </h3>   
+                                 <input type="hidden" placeholder="title" name="vedio" id="vedioname" class="form-control" style="padding:25px !important;" required >
+                                
+                                 <input type="text" placeholder="title" name="title" class="form-control" style="padding:25px !important;" required >
+                                 <br>
+                                 <textarea  rows="5" cols="6" placeholder="Describe about post..."  name="description"  class="form-control" required></textarea>
+                                    <br>
+                                 <button class="btn btn-lg btn-primary btn-block" type="submit" > Upload </button>
+                  
+                        </div>      
+                        <br>
+                    </form>
+                    
+                    <div class="col-lg-12 co-md-12 col-sm-12 text-center my-4"  >
+                        {% if messages %}
+                        <ul class="messages" style="padding: 0px !important;margin: 0px !important;" >
+                            {% for message in messages %}
+                            <li  {% if message.tags %} class="alert alert-{{ message.tags }} " {% endif %}> {{ message }} </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                     </div> 
+                  </div>
+         </div>
+   
+</div>    
+
+
+<div  id="ex1" class="modal border" style="height: 500px;overflow: hidden;"  >
+                          
+    <div class=" col-lg-12 col-md-12 col-sm-12 text-center" >
+        <div class="collapse profile-loader" style="width: 100%;overflow: hidden;" >
+            <div style="width: 100%;background-color: lightgray;overflow: hidden;" >
+                <div class="loader" ></div>
+            </div>
+            <b>uploading picture</b>  
+        </div>
+         <br>   
+        <div class="col-lg-12 col-sm-12 col-md-12 text-center " >
+            <form method="POST" enctype="multipart/form-data" id="post-form">
+                {% csrf_token %}
+              
+                <img  src="{{request.session.image}}"  width="200" height="200" id="imagePreview" style="border: solid 5px royalblue;border-radius: 120px;padding: 10px;">
+            <label class="text-center py-2" style="display: block;">
+                <p id="picname" >
+                    PROFILE PICTURE
+                </p> 
+            </label>
+            <label for="picture" onclick="CheckFile()" id="lblPic" class="btn btn-defualt border px-2 btn-lg" style="padding:5px;">
+                <input onchange="ShowImagePreview(this,document.getElementById('imagePreview'))" type="file" id="picture" name="picture" style="display: none;" />
+            Browse
+            </label>
+            <br>
+            <br>
+            <button class="btn btn-primary btn-block" type="submit" > Upload </button>
+        </form>
+        <a href="#" rel="modal:close" style="margin-top: 100px !important;" >Close</a>
+
+        </div>
+     
+        <br>
+      
+    </div>
+   
+</div>
+
+
+<style>
+p
+{
+    word-break: break-all;
+}
+
+
+</style>
+<script>
+$(document).ready(function(){
+
+});
+         
+          
+
+ function upload(vedio)
+ {
+
+    if (vedio.files && vedio.files[0] && vedio.files[0].size/1073741824 < 3.6 ) {
+
+
+
+
+
+
+        $(".vedio-loader").removeClass('collapse');
+        var formData = new FormData(document.getElementById("post-form"));
+
+            $.ajax({
+                type: 'POST',
+                url : 'upload_vedio_file',
+                data : formData ,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                        
+                    var video = document.getElementById('video');
+                    $("#video").removeClass('collapse');
+                    $("#lblvedio").addClass('collapse');
+                    
+                    var source = document.getElementById('source');
+
+
+                    source.setAttribute('src', '/media/vedios/'+data.file);
+
+                    setTimeout(function() {  
+                        video.pause();
+
+                        source.setAttribute('src', '/media/vedios/'+data.file); 
+                        $("#vedioname").val(data.file);    
+                        video.load();
+                        video.play();
+                        $(".vedio-loader").addClass('collapse');
+                    }, 3000);
+                        
+                      
+                },
+                error: function(data) {
+                    $(".error").removeClass('collapse');
+                    $(".vedio-loader").addClass('collapse');
+                }
+        });
+    }    
+    
+ }   
+
+
+   
+</script>
+<style>
+    .username
+    {
+        justify-content: center;
+    }
+</style>
+{% endblock content %}

@@ -1,0 +1,1197 @@
+
+
+{% extends 'Instagram/layout.html' %}
+{% load static %}
+{% block content %}
+
+
+<script src="/static/instagram/html2canvas.js"></script>
+<div style="background-color: #F0EEEE;" >
+    <div class="row ">
+            <div class=" col-lg-12 col-md-12 col-sm-12">
+
+                    <div class="col-lg-2 col-md-12 col-sm-12 k">
+                            <div class="row border">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="background-color:white;">
+                                       <p class="text-center" >
+                                        <b style="font-weight: 200;color: black;">
+                                            <br>
+                                           SUGGESTIONS
+                                        </b>
+                                       </p> 
+                                       <hr>
+                                    <div class="row ">
+                                        <div class="col-lg-12 col-md-12 col-sm-12"  >
+                                        
+
+                                        {% for i in suggestions %}    
+                                        {% if forloop.counter < 5 %}
+                                            <div class=" text-center col-lg-6 col-md-12 col-sm-12" style="float: left;" >
+                                                <img style="border-radius:30px;" src="{{i.image}}" width="50" height="50" alt="">   
+                                                <br>
+                                                <label style="font-size: 20px;" >
+                                                    {{i.Username}}
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0px ;" >
+                                            {% if suggestions  %}   
+                                                 <button style="outline:none ;"  class="btn-suggest-more pull-right border btn btn-default btn-sm" > more </button>  
+                                            {% else %}
+                                            <div class=" text-center col-lg-12 col-md-12 col-sm-12" style="float: left;" >
+                                                <label style="color: lightgray;" >
+                                                    No Suggestions
+                                                </label>
+                                            </div> 
+
+                                                 {% endif %}
+                                        </div>
+
+                                    </div>   
+                                </div>
+                            </div>
+                             <br>
+                            <div class="row border">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="background-color:white;">
+                                       <p class="text-center" >
+                                        <b style="font-weight: 200;color: black;">
+                                            <br>
+                                           MY SUBSCRUBTIONS
+                                        </b>
+                                       </p> 
+                                       <hr>
+                                    <div class="row ">
+                                        <div class="col-lg-12 col-md-12 col-sm-12"  >
+                                            {% for i in subcribers %}    
+                                            {% if forloop.counter < 5 %}
+                                                <div class=" text-center col-lg-6 col-md-12 col-sm-12" style="float: left;" >
+                                                    <img style="border-radius:30px;" src="{{i.SubscribedUser.image}}" width="50" height="50" alt="">   
+                                                    <br>
+                                                    <label style="font-size: 20px;"  >
+                                                        {{i.SubscribedUser.Username}}
+                                                    </label>
+                                                </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                            </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0px ;" >
+                                            {% if subcribers  %}   
+                                            <button style="outline:none ;"  class="btn-subscriber-more pull-right border btn btn-default btn-sm" > more </button>  
+                                       {% else %}
+                                       <div class=" text-center col-lg-12 col-md-12 col-sm-12" style="float: left;" >
+                                           <label style="color: lightgray;" >
+                                               No Subscriptions
+                                           </label>
+                                       </div> 
+
+                                            {% endif %}                                 </div>
+
+                                    </div>   
+                                </div>
+                            </div>
+                    </div>
+                    
+                    <div class="col-lg-8 bg-white border col-md-12 col-sm-12">
+
+                     
+                            <br>
+                            <br>
+                            <div  class="container" >
+                                <div class="col-lg-1 col-md-12 col-sm-12" >
+
+                                </div>
+                            <div class="col-lg-10  col-md-12 col-sm-12" >
+
+                         
+
+                        {% if posts %}
+
+                        {% else %}
+                            <div class="card" >
+                                 <h4 class="text-center" >
+                                     No Posts
+                                 </h4>
+                            </div>
+                        {% endif %}
+                        {% for i in posts %} 
+                        
+                              <div class="card" id="{{i.id}}">
+                                  <br>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12" >
+                                                <div class="col-lg-6 col-md-12 col-sm-12" style="padding: 0px;"  >
+                                                    <div style="display: flex;align-items: center;" class="col-sm-12 col-md-12 col-lg-12" >
+                                                        <div  style="margin: 0px;" >
+                                                            <img src="{{i.User.image}}" width="50" height="50" style="border:solid 3px royalblue;border-radius:60px;padding: 3px;"   alt="">
+                                                        </div>
+                                                        <div class="mx-4" >
+                                                            <div style="display: flex;" >
+                                                                <h3  style="margin:0px" >
+                                                                    
+                                                                        <a style="color: black;font-weight: 600;" href='profile?user_id={{i.User.id}}'> <label style="font-size: 20px;" for=""> {{i.User.Username}} </label> </a>
+                                                                    
+                                                                </h3>
+                                                                <label class="mx-4" id="{{i.id}}postTime" style="color: grey;" for="">...</label>
+                                                            </div>
+                                                            <div style="display: flex;" >
+                                                                <i class="fa fa-facebook btn btn-primary btn-sm px-2" style="border-radius: 60px;padding: 0px;font-size: 10px;" ></i>
+                                                                <i class="mx-2 fa fa-twitter btn btn-primary btn-sm " style="border-radius: 60px;padding: 0px 3px 0px 3px;font-size: 10px;" ></i>    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 col-sm-12 py-4" style="justify-content: flex-end;align-items: center;display: flex;" >
+                                                        <div class="col-lg-12 text-right col-md-12 col-sm-12  " style="align-items: center;display: flex;" >
+                                                                <div class="col-lg-8 offset-lg-4 col-md-12 col-sm-12 " style="position: relative;" >
+                                                                    
+                                                                    <div  style="left: 0;z-index: 1;position:absolute;color: grey;">
+                                                                       
+                                                                        <i id="{{i.id}}" class="like_sign{{i.id}} fa fa-heart fa-2x mx-2"  ></i>
+                                                                    </div>
+                                                                    <div style="position: relative;" >
+                                                                        <i class="btn-write-comments fa fa-comment mx-2 fa-2x" style="left: 120;color: green;z-index: 1;position: absolute;" ></i>
+                                                                        </div>
+                                                                        <div style="position: relative;" >
+
+                                                                        <i class="fa fa-share mx-2 fa-2x" style="left: 60;color: gray;z-index: 1;position: absolute;" ></i> 
+                                                                    </div>
+                                                            
+                                                                </div>
+                                                               
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 post-bio-data{{i.id}}">
+                                            <div class="row">
+                                                <div class="row col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-11 col-md-12 col-sm-12" >
+                                                    <br>
+                                                    <p class="mx-4" >
+                                                        <b>
+                                                        <h4 class="mx-4" style="margin: 0px ;" >
+                                                            {{i.Title}}
+                                                        </h4>
+                                                    </b>
+                                                    
+                                                    </p>
+                                                    <p class="mx-4" >
+
+                                                        <h4 class="mx-4" >
+                                                            {{i.Description}} 
+                                                        </h4>
+                                                    </p>
+                                                    
+                                                </div>
+                                                <div style="padding:0px" class="text-right col-lg-1 col-md-12 col-sm-12 my-4" >
+                                                    <button class="btn btn-post-options btn-default btn-sm border" style="outline: none;border: none;border-radius: 40px;" >
+                                                        <i class="fa fa-ellipsis-v " style="font-size:15px;" >  </i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 text-center" id="postotherdata{{i.id}}" >
+                                            {% if i.Type == "image" %}
+                                                    {% for i in i.Photos %}
+                                                    {% if forloop.last and forloop.first %}
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 border bg-dark" style="padding: 0px;height: min-content;" >
+                                                            <img src="{{i}}" width="100%"   alt="">
+                                                    </div>   
+                                                   
+                                                    {% elif forloop.counter < 3 %}
+                                                        <div class="col-lg-6 col-md-12 col-sm-12 border bg-dark" style="padding: 0px;height: min-content;" >
+                                                                <img src="{{i}}" width="100%"   alt="">
+                                                  </div>   
+                                                    {% endif %}    
+                                                    {% endfor %}
+                                                     
+                                                    {% if i.Photos|length > 2  %}
+                                                    <button id="BtnViewAllPhotos{{i.id}}" class="border"  style="color: gray;float: right;border: none;outline: none;background-color: transparent;font-size: 18px;" >
+                                                        View all ({{ i.Photos|length }})
+                                                    </button>
+                                                    {% endif %}   
+
+                                            {% else %}
+                                            
+                                             <video id="{{i.id}}post_vedio" width="100%" height="500" poster= "{{i.Image.url}}"  style="background-color: black;">  
+                                                    <source src= "/media/vedios/{{i.Vedio}}" type="video/mp4"> 
+                                                </video>  
+                                                <i class="fa fa-play fa-4x"  style="border-radius: 100px !important;position: absolute;z-index: 1;right: 415;top: 220;" >
+
+                                                </i>  
+                                         {% endif %}
+                                       
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12 col-sm-12">
+                                                <hr>
+                                                <div>
+
+                                                <b style="color: gray;" >
+                                                    <label for="" id="commentsCount{{i.id}}" >0</label> Comments
+                                                </b>
+                                                <b style="color: gray;float: right;" >
+                                                    <label for="" id="like_count{{i.id}}" >0</label> Likes
+                                                </b>
+                                            </div>
+
+                                                <div class="col-lg-12 col-md-12 col-sm-12 text-right" >
+                                                    <button style="border: none;outline: none;" class="btn-View-all-comments btn alert-defualt border btn-sm" >view all comments</button>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" >
+                                                    <ul  style="overflow: hidden;max-height: 0px;list-style-type: none;padding: 0px;" id="comment-box"  class="comments{{i.id}}" >
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="my-2 col-lg-12 col-md-12 col-sm-12 "  >
+                                                    <form method="POST" enctype="multipart/form-data" id="{{i.id}}{{i.id}}" >
+                                                        {% csrf_token %}
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 card">
+                                                        <input type="hidden" value="{{i.id}}" name="post_id" >
+                                                        <input type="hidden" value="{{i.User.id}}" name="user_id" >
+                                                        <div style="display: flex;justify-content: space-between;" >
+                                                            
+                                                        <textarea minlength="1" onkeypress="comment('{{i.id}}')" class="my-4 commentbox" name="description" id="description" rows="2"  placeholder="write your comment"  style="width: 100%;border: none !important;display: block;resize: none;outline:none !important;"  ></textarea>
+                                                        <button style="outline: none;background-color: transparent;border: none;outline: none;" type="button" id="{{i.id}}" class="btn-comment" >
+                                                                <i class="fa fa-angle-right btn btn-default fa-2x" style="border-radius: 150px;font-weight: 500;" >
+
+                                                                </i>
+                                                        </button>
+
+                                                        
+                                                    </div>  
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                              </div>  
+                           <br>
+                        {% endfor %}
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                          </div>   
+                          <div class="col-lg-1 col-md-12 col-sm-12" >
+
+                          </div>
+                            </div>
+                    
+
+                    </div>
+
+                    <div class="col-lg-2 col-md-12 col-sm-12">
+                        <div class="row" > 
+                            
+                            <div style="margin-top: 40px;background-color:white;" class="col-lg-12 col-md-12 col-sm-12" >
+                                <h3 class="text-center" >
+                                    <b style="color: #898989;">
+                                        <br>
+                                       ADVERTS
+                                    </b>
+                                </h3> 
+                                <br>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <h3>
+                                                <b>
+                                                    ADVERTS 1
+                                                </b>
+                                            </h3>
+                                            <br>
+                                            <h3>
+                                                <b>
+                                                    ADVERTS 1
+                                                </b>
+                                            </h3>
+                                            <br>
+                                            <h3>
+                                                <b>
+                                                    ADVERTS 1
+                                                </b>
+                                            </h3>
+                                            <br>
+                                            <h3>
+                                                <b>
+                                                    ADVERTS 1
+                                                </b>
+                                            </h3>
+                                            <br>
+                                            <h3>
+                                                <b>
+                                                    ADVERTS 1
+                                                </b>
+                                            </h3>
+                                            <br>
+                                            <h3>
+                                                <b>
+                                                    ADVERTS 1
+                                                </b>
+                                            </h3>
+                                            
+                                    </div>
+                                </div>
+                            </div>
+                
+                        </div>
+                    </div>
+                    
+            </div>
+    </div>
+</div>
+
+
+<div  id="ex1" class="modal border" style="padding: 5px;max-height: 500px;"  >
+    <div class=" col-lg-12 col-md-12 col-sm-12 text-center"  >
+         <div>
+            <a href="#"  rel="modal:close" class="btn btn-default" style="float: right;" > <i class="fa fa-times" ></i></a>  
+            <h3>
+                <b style="color: grey;" >
+                   SUGGESTIONS FOR YOU
+                </b>
+            </h3>      
+         </div>   
+        <input type="text" id="myInput" class="form-control form-control-lg" placeholder="search user" >
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12  py-2 " style="max-height: 400px;overflow: auto;"   >
+        <table  class="col-lg-12 col-md-12 col-sm-12" style="table-layout: fixed;" >
+            <tbody id="myTable" style="overflow: auto;" >
+            {% for i in suggestions %}    
+            <tr   >
+                <td >      
+                <div class="col-lg-12 col-md-12 col-sm-12 py-2" style="display: flex;"  >
+                    <img style="border-radius:30px;" src="{{i.image}}" width="50" height="50" alt="">   
+                    <div class="mx-4" >
+                        <label style="font-size: 18px;" >
+                            {{i.Username}}
+                        </label>
+                        <br>
+                        <label style="font-weight: 100;color: grey;font-size: 14px;" >
+                            {{i.First_Name}} {{i.Last_Name}} 
+                        </label>
+                        
+                    </div>
+
+                </div>
+           
+              </td>
+              <td style="text-align: right;" >
+                  <button class="btn btn-primary btn-sm btn-subscribe" id="{{i.id}}" >Subscribe</button>
+                  <div class="collapse" id="div{{i.id}}" >
+                    <i class="fa fa-spinner fa-pulse fa-2x fa-fw" style="color: #2e6da4;"></i>
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <label class="collapse" id="lbl{{i.id}}" style="color: grey;" for=""> Subscribed </label>
+                </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+        </div>
+
+    </div>
+  
+    <div  id="ex2" class="modal border" style="padding: 5px;max-height: 500px;"  >
+        <div class=" col-lg-12 col-md-12 col-sm-12 text-center"  >
+             <div>
+                <a href="#"  rel="modal:close" class="btn btn-default" style="float: right;" > <i class="fa fa-times" ></i></a>  
+                <h3>
+                    <b style="color: grey;" >
+                       YOUR SUBSCRIPTIONS
+                    </b>
+                </h3>      
+             </div>   
+            <input type="text" id="myInput1" class="form-control form-control-lg" placeholder="search user" >
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12  py-2 " style="max-height: 400px;overflow: auto;"   >
+            <table  class="col-lg-12 col-md-12 col-sm-12" style="table-layout: fixed;" >
+                <tbody id="myTable1" style="overflow: auto;" >
+                {% for i in subcribers %}    
+                <tr>
+                    <td >      
+                    <div class="col-lg-12 col-md-12 col-sm-12 py-2" style="display: flex;"  >
+                        <img style="border-radius:30px;" src="{{i.SubscribedUser.image}}" width="50" height="50" alt="">   
+                        <div class="mx-4" >
+                            <label style="font-size: 18px;" >
+                                {{i.SubscribedUser.Username}}
+                            </label>
+                            <br>
+                            <label style="font-weight: 100;color: grey;font-size: 14px;" >
+                                {{i.SubscribedUser.First_Name}} {{i.SubscribedUser.Last_Name}} 
+                            </label>
+                            
+                        </div>
+    
+                    </div>
+               
+                  </td>
+                  <td style="text-align: right;" >
+                      <button class="btn btn-danger btn-sm btn-unsubscribe" id="{{i.SubscribedUser.id}}" >Unsubscribe</button>
+                      <div class="collapse" id="unsubdiv{{i.SubscribedUser.id}}" >
+                        <i class="fa fa-spinner fa-pulse fa-2x fa-fw" style="color: #2e6da4;"></i>
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                      <label class="collapse" id="unsublbl{{i.SubscribedUser.id}}" style="color: grey;" for=""> Unsubscribed </label>
+                    </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+            </div>
+    
+        </div>    
+        <div  id="shareBox"  class="modal border" style="padding: 5px;max-height: 500px;"  >
+            <div class=" col-lg-12 col-md-12 col-sm-12 text-center"  >
+                 <div>
+                    <a href="#"  rel="modal:close" class="btn btn-default" style="float: right;" > <i class="fa fa-times" ></i></a>  
+                    <h3>
+                        <b  >
+                           Share to Friends
+                        </b>
+                    </h3>      
+                 </div>   
+                <input type="text" id="myInput2" class="form-control form-control-lg" placeholder="search user" >
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12  py-2 " style="max-height: 400px;overflow: auto;"   >
+                <table  class="col-lg-12 col-md-12 col-sm-12" style="table-layout: fixed;" >
+                    <tbody id="myTable2" style="overflow: auto;" >
+                    {% for i in subcribers %}    
+                    <tr>
+                        <td >      
+                        <div class="col-lg-12 col-md-12 col-sm-12 py-2" style="display: flex;"  >
+                            <img style="border-radius:30px;" src="{{i.SubscribedUser.image}}" width="50" height="50" alt="">   
+                            <div class="mx-4" >
+                                <label style="font-size: 18px;" >
+                                    {{i.SubscribedUser.Username}}
+                                </label>
+                                <br>
+                                <label style="font-weight: 100;color: grey;font-size: 14px;" >
+                                    {{i.SubscribedUser.First_Name}} {{i.SubscribedUser.Last_Name}} 
+                                </label>
+                                
+                            </div>
+        
+                        </div>
+                   
+                      </td>
+                      <td style="text-align: right;" >
+                         
+                          <button class="btn btn-primary btn-sm btn-share" type="submit" id="{{i.SubscribedUser.id}}" >Share</button>
+                          <div class="collapse" id="shareloader{{i.SubscribedUser.id}}" >
+                            <i class="fa fa-spinner fa-pulse fa-2x fa-fw" style="color: #2e6da4;"></i>
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                          <label class="collapse" id="sharelbl{{i.SubscribedUser.id}}" style="color: grey;" for=""> Shared </label>
+                        </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+                </div>
+        
+            </div>    
+    
+
+        <div  id="ex3" class="modal border" style="padding: 5px;max-height: 200px;"  >
+            <div class=" col-lg-12 col-md-12 col-sm-12 text-center"  >
+                 <div>
+                    <h3>
+                        <b style="color: grey;" >
+                           Are you sure to delete this comment?
+                        </b>
+                    </h3>      
+                    <label for="">this comment will no longer able to visible</label>    
+                 </div>   
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12  py-2 text-center" style="max-height: 400px;overflow: auto;"   >
+                    <a  rel="modal:close" class="btn btn-danger btn-yes text-white"  > Yes</a>  
+                    <a href="#"  rel="modal:close" class="btn btn-default"  > No</a>  
+            </div>
+        
+            </div> 
+
+
+           
+
+            <div  id="postDetails" class="modal border" style="padding: 5px;max-height: 200px;"  >
+                <div class=" col-lg-12 col-md-12 col-sm-12 text-center"  >
+                     <h3>
+                         <b>
+                             About this post
+                         </b>
+                     </h3>
+                     <div  >
+                            <a class="post-link font-20 btn btn-default border btn-block " >
+                                    go to post
+                            </a>
+                            <a href="" class="font-20 btn btn-default border btn-block" >
+                                share
+                            </a>
+                            
+                    </div>   
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12  py-2 text-center" style="max-height: 400px;overflow: auto;"   >
+                        <a href="#"  rel="modal:close" class="font-20 btn"  > close</a>  
+                </div>
+            
+                </div> 
+
+
+                <div  id="goToPost" class="modal border" style="padding: 5px;max-width: 100% !important;"  >
+                    <div class="single-post-details col-lg-12 col-md-12 col-sm-12 text-center"  >
+                         
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12  py-2 text-center" style="max-height: 400px;overflow: auto;"   >
+                            <a href="#"  rel="modal:close" class="font-20 btn"  > close</a>  
+                    </div>
+                
+                    </div> 
+    
+                
+    </div>
+
+   
+
+<style>
+
+    .font-20
+    {
+        font-size: 20px;
+    }
+    .deleting
+    {
+        color: gray;
+    }
+
+    p
+    {
+        word-break: break-all;
+    }
+    .fa-heart-shadow{
+  text-shadow: 1px 1px 6px #ff3399;
+}
+    #comment-box li
+    {
+        border-radius: 6px;
+        background-color: #F0EEEE;
+        
+    }
+    .fa 
+    {
+        cursor: pointer;
+    }
+
+    .fa-play:hover
+    {
+        color: grey !important;
+    }
+    .height-auto
+    {
+        height:auto !important;
+        max-height: 100% !important;
+    }
+
+    .glowing-border {
+    border: 2px solid #dadada;    
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
+
+</style>
+
+<script>
+
+
+var comment_id = 0;
+var vedio="";
+var post_id=0;
+
+
+var element = $("#"+post_id) // global variable
+        var getCanvas; //       
+
+
+function FullScreen(data)
+{
+    $(data).closest('div').removeClass('col-lg-3');
+    $(data).closest('div').animate({width: '100%'}, 500);
+    $(data).animate({height: '2000px'}, 500) ;
+    
+}
+
+$(document).ready(function(){
+
+
+    //function to show all comments of post
+        $('.btn-View-all-comments').on('click' , function()
+        {
+            $(this).parents('div').siblings('div').children('ul').toggle('slow', function() {
+    $(this).addClass('height-auto');
+});
+        });
+
+        $('.btn-write-comments').on('click' , function()
+        {   
+            var id =$(this).closest('.card').attr('id')+$(this).closest('.card').attr('id');
+            document.getElementById(id).scrollIntoView({
+    behavior: "smooth", // or "auto" or "instant"
+    block: "center" // or "end"
+});
+        $("#"+id).children('div').closest('div').addClass('glowing-border');
+
+        });
+
+
+    $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+  $("#myInput1").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable1 tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+$("#myInput2").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable2 tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+  
+
+
+
+function PostLikes(id)
+{
+    
+    $.ajax({
+            type:'GET',
+            url : 'like_seen?id='+id,
+            success:function(j){
+                    
+                    if (j.like)
+                    {
+                        $(".like_sign"+id).css("color", "linear-gradient(to bottom, #ff3399 0%, #ff66cc 61%)");
+                        
+                        $(".like_sign"+id).addClass("fa-heart-shadow");
+                        $("#like_count"+id).text(j.count);
+                        
+
+                        $(".like_sign"+id).animate({fontSize: '35px'}, 40) ;
+                        $(".like_sign"+id).animate({fontSize: '30px'}, 40) ;
+                          
+                    }
+                    else
+                    {
+                        
+                        $(".like_sign"+id).css("color", "grey");  
+                        $(".like_sign"+id).removeClass("fa-heart-shadow");
+                        $("#like_count"+id).text(j.count);
+                    }
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });
+}
+
+
+$('.fa-heart').on('click' , function()
+{
+    var id = 0;
+     id = $(this).attr('id');
+     PostLikes(id);  
+});
+
+//code to see if post is in viewreport
+$.fn.isInViewport = function() {
+    var elementTop = $(this).offset().top;
+    var elementBottom = elementTop + $(this).outerHeight();
+
+    var viewportTop = $(window).scrollTop();
+    var viewportBottom = viewportTop + $(window).height();
+
+    return elementBottom > viewportTop && elementTop < viewportBottom;
+};
+
+$(window).on('resize scroll', function() {
+    var picked = false;
+    seens(picked);    
+});
+
+
+
+
+
+
+
+
+
+//function to delete comment
+    $('.btn-yes').on('click',function(){
+        $("#"+comment_id).find('i').removeClass('fa fa-times-circle');
+        
+        $("#"+comment_id).find('i').addBack('deleting');
+    
+        $("#"+comment_id).find('i').text('deleting');
+    
+        $.ajax({
+            type:'GET',
+            url : 'delete_comment?id='+comment_id,
+            success:function(j){
+                $("#"+comment_id).hide();
+                var commentCount=$("#commentsCount"+j.post_id).text();
+                commentCount=parseInt(commentCount);
+                commentCount = commentCount-1;
+                $("#commentsCount"+j.post_id).text(commentCount);
+                
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });
+    });
+
+    $('.btn-subscribe').on('click',function(){
+            var id = $(this).attr('id');
+            $(this).hide();
+            $(this).siblings('div').removeClass('collapse');
+            $.ajax({
+            type:'GET',
+            url : 'subscribe?id='+id,
+            success:function(j){
+               
+                $("#div"+id).addClass('collapse');
+                $("#lbl"+id).removeClass('collapse');
+                
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });
+
+});
+
+
+$('.btn-unsubscribe').on('click',function(){
+            var id = $(this).attr('id');
+            $(this).hide();
+            $(this).siblings('div').removeClass('collapse');
+            $.ajax({
+            type:'GET',
+            url : 'unsubscribe?id='+id,
+            success:function(j){
+               
+                $("#unsubdiv"+id).addClass('collapse');
+                $("#unsublbl"+id).removeClass('collapse');
+                $("#"+id).find("tr").fadeOut();
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });
+
+});
+  
+
+
+$('.btn-post-options').on('click',function(){
+    
+        $("#postDetails").modal({
+  escapeClose: false,
+  clickClose: false,
+  showClose: false
+});
+
+var id = $(this).parents('.card').attr('id');
+var bio=$("#"+id).clone();
+$('.single-post-details').html($("#"+id).html())
+
+$('.post-link').attr('href' , 'single_post?id='+id);
+    
+
+});
+
+
+
+
+
+$('.BtnViewAllPhotos').on('click',function(){
+   
+    var id = $(this).attr('id');
+        $(this).siblings('.'+id).modal({
+  escapeClose: false,
+  clickClose: false,
+  showClose: false
+});
+});
+$('.fa-share').on('click',function(){
+
+    post_id=$(this).parents('.card').attr('id');
+
+        $("#shareBox").modal({
+  escapeClose: false,
+  clickClose: false,
+  showClose: false
+});
+
+
+});
+
+
+$('.btn-share').on('click',function()
+    {
+        user_id = $(this).attr('id'); 
+        $(this).hide();
+        $("#shareloader"+user_id).removeClass("collapse");
+        var mappedId = "postotherdata"+post_id;
+        window.scrollTo(0, 0);
+
+    html2canvas(document.getElementById(mappedId)).then(function (canvas) {
+      
+        document.getElementById(post_id)
+        .scrollIntoView({ behavior: "instant" });
+        console.log(canvas.toDataURL("image/jpeg", 0.9));
+        let data = {}
+        data.user_id = user_id;
+        data.post_id = post_id;
+        data.image =  canvas.toDataURL("image/jpeg", 0.9);
+        data.csrfmiddlewaretoken = '{{ csrf_token }}';
+
+        $.ajax({
+            type:'POST',
+            url : 'share_post',
+            data : data , 
+            dataType: "json",
+            success:function(j){
+                $("#shareloader"+user_id).addClass("collapse");
+                $("#sharelbl"+user_id).removeClass('collapse');
+                // $("#"+datetime).find('i').html(j.id);
+                
+                // $('.message-list').append(
+                //                "<li  style='text-align:right' >"+
+                //                     "<div class='sender' >"+
+                //                         "<label>"+
+                //                             message+
+                //                         "</label>"+
+                //                        "</div>"+
+                //                 "</li>");
+               
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        }); 
+
+
+    });
+});
+            
+
+
+
+    $('.btn-suggest-more').on('click',function(){
+        $("#ex1").modal({
+  escapeClose: false,
+  clickClose: false,
+  showClose: false
+});
+    });
+
+    $('.btn-subscriber-more').on('click',function(){
+        $("#ex2").modal({
+  escapeClose: false,
+  clickClose: false,
+  showClose: false
+});
+    });
+
+});
+$(function()
+{
+    getAllComments();
+
+    $('.card').each(function() {
+    var activeColor = $(this).attr('id');
+  
+            if(activeColor != undefined)
+            {
+                GetLikes(activeColor);  
+            }
+   
+  });
+    
+
+});
+
+
+function delete_comment(id)
+{
+    comment_id=id;
+  $("#ex3").modal({
+  escapeClose: false,
+  clickClose: false,
+  showClose: false
+});
+}
+
+function getAllComments()
+{
+    $.ajax({
+            type:'GET',
+            url : 'get_all_comments',
+            success:function(json){
+                $.each(json.comments,function(i,j)
+                {
+
+                    var session = "{{request.session.username}}";
+                    var link='';
+                    if(j.username == session)
+                    {
+                        link="<i onclick='delete_comment("+j.id+")' class='fa fa-times-circle fa-1x'></i>";
+                    }
+                    else
+                    {
+                        link='';
+                    }
+                    $('.comments'+j.post_id).append(
+                                "<li id='"+j.id+"' class='border my-2' style='padding:10px;display:block !important;' >"+
+                                    "<div>"+
+                                        
+                                        "<div style='display: flex;justify-content:space-between' >"+
+                                            "<div class='col-lg-11 col-md-12 col-sm-12' style='padding:0px;display: flex' >"
+                                            +"<img class='menu-item' style='padding: 2px;border-radius: 50px;border: solid 0px royalblue;' src='"+j.image+"' width='50' height='50' alt=''>"+
+                                            "<div class='col-lg-12 col-md-12 col-sm-12 py-2 mx-2' style='padding:0px' >"+
+                                                "<b style='font-size:16px' >"+
+                                                    j.username+
+                                                   
+                                                "</b>"+
+                                                "<label style='color:gray;font-weight:100' class='mx-4' id='"+j.id+"comment_time' >...</label>"    
+                                                    +
+                                                "<p>"+
+                                                    j.description+
+                                                "</p>"+
+                                            "</div>"+
+                                            "</div>"
+                                            +
+                                            link
+                                        +
+                                        "</div>"+
+                                       "</div>"+
+                                "</li>"
+    
+                );
+                $('#commentsCount'+j.post_id).text($('.comments'+j.post_id).children().length);
+                }) ;  
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });
+}
+
+window.setInterval(function(){
+   
+    var picked = false;
+    seens(picked);    
+  
+    //method to show comments time
+    //postTime
+
+
+
+}, 1000);
+
+var id=0;
+function comment(formId)
+{
+    id=formId+formId;
+}
+
+    $(document).ready(function(){
+function uplaodcomment(form)
+{
+
+    if($("#description").length > 0)
+    {
+    var formData = new FormData(document.getElementById(form));
+        $.ajax({
+            type:'POST',
+            url : 'upload_comments',
+            data : formData ,
+            processData: false,
+            contentType: false,
+            success:function(comment){
+               
+                    $('.commentbox').val("");
+                
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });
+    }
+    
+}
+$(document).on('keypress',function(e) {
+    if(e.which == 13) {
+        uplaodcomment(id);
+    }
+});
+
+            
+            $('.fa-play').on('click',function()
+            {
+                    $(this).addClass('fa-circle-o-notch fa-spin');
+                    $(this).fadeOut('10000');
+                    $(this).siblings('video').attr('controls','controls');
+                    vedio = document.getElementById($(this).siblings('video').attr('id'));
+                    vedio.play();  
+                    $(this).fadeOut('10000');
+ 
+            });
+
+
+            vedio.onplaying = function() {
+            alert("The video is now playing");
+            };
+
+        $(".btn-comment").on('click',function(e){
+            
+        var form = $(this).attr('id')+$(this).attr('id');
+        uplaodcomment(form);
+       
+    });
+});
+
+
+
+$('.fa-times-circle').on('click',function(){
+        alert("");
+       
+    });
+
+
+    function seens(Picked)
+{
+
+    picked=Picked;
+    $('.card').each(function() {
+    var activeColor = $(this).attr('id');
+        
+    if ($(this).isInViewport() && picked == false) {
+            
+            picked=true;
+
+            $.ajax({
+            type:'GET',
+            url : 'post_seen?id='+activeColor,
+            success:function(j){
+
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });    
+
+
+    } else {
+    }
+   
+  });
+}
+
+
+function PostLikes(id)
+{
+    
+    $.ajax({
+            type:'GET',
+            url : 'like_seen?id='+id,
+            success:function(j){
+                    
+                    if (j.like)
+                    {
+                        $(".like_sign"+id).css("color", "linear-gradient(to bottom, #ff3399 0%, #ff66cc 61%)");
+                        
+                        $(".like_sign"+id).addClass("fa-heart-shadow");
+                        $("#like_count"+id).text(j.count);
+                        
+
+                        $(".like_sign"+id).animate({fontSize: '35px'}, 40) ;
+                        $(".like_sign"+id).animate({fontSize: '30px'}, 40) ;
+                          
+                    }
+                    else
+                    {
+                        
+                        $(".like_sign"+id).css("color", "grey");  
+                        $(".like_sign"+id).removeClass("fa-heart-shadow");
+                        $("#like_count"+id).text(j.count);
+                    }
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });
+}
+
+function GetLikes(id)
+{
+    
+    $.ajax({
+            type:'GET',
+            url : 'get_Likes?id='+id,
+            success:function(j){
+                    
+                    if (j.like)
+                    {
+                        $(".like_sign"+id).css("color", "linear-gradient(to bottom, #ff3399 0%, #ff66cc 61%)");
+                        
+                        $(".like_sign"+id).addClass("fa-heart-shadow");
+                        $("#like_count"+id).text(j.count);
+                        
+
+                        $(".like_sign"+id).animate({fontSize: '35px'}, 40) ;
+                        $(".like_sign"+id).animate({fontSize: '30px'}, 40) ;
+                          
+                    }
+                    else
+                    {
+                        
+                        $(".like_sign"+id).css("color", "grey");  
+                        $(".like_sign"+id).removeClass("fa-heart-shadow");
+                        $("#like_count"+id).text(j.count);
+                    }
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });
+}
+
+
+</script>
+{% endblock content %}

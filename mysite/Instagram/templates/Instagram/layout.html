@@ -1,0 +1,547 @@
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <script type='text/javascript' src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.8/jquery.validate.min.js"></script>
+        <link href = "https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto+Slab|Roboto:300,400,500,700" rel = "stylesheet" />
+
+    <!------ Include the above in your HEAD tag ---------->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+        <!-- emojis -->
+         
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    
+
+
+
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+
+        <title>instagrame</title>
+    </head>
+    <body  >
+        <div class="collapse parent-loader" style="width: 100%;background-color: lightgray;overflow: hidden;position: absolute;z-index: 2;" >
+            <div class="loader" ></div>  
+        </div>
+
+           <div class="row py-4 shadow"  style="background-color: white;padding:0px;margin: 0px;justify-content: space-between;" >
+
+                <div class="col-lg-12 row col-md-12 col-sm-12" >
+                            
+                    <div class="col-lg-4 col-md-12 col-sm-12 text-center">
+                            <h2>
+                                OP SCIENCES
+                            </h2>
+                    </div>
+                    <div class="col-lg-4  col-md-12 col-sm-12 text-center" >
+                        <input class="search-box form-control text-center" style="font-size: 15px;border-radius: 5px;background-color: #F1F1F1;" placeholder="search" />    
+                        <div class="col-lg-12 col-sm-12 col-md-12" style="padding: 0px;margin:0px;" >
+                            <div class="search-loader collapse border" style="width: 100%;overflow: hidden;position: absolute;" >
+                                <i class="fa fa-spinner fa-pulse fa-2x fa-fw" style="color: #2e6da4;"></i>
+                                <span class="sr-only">Loading...</span>
+                                <b>searching...</b>  
+                            </div>
+                        <div class=" search-results col-lg-12 col-md-12 col-sm-12" style="padding: 0px;max-height: 600px;overflow: auto;" >
+                            <ul class="row border col-lg-12 col-md-12 col-sm-12" style="display: block;padding: 0px;margin:0px;" >
+
+                            </ul>
+                        </div>
+                      
+                        </div>
+                      
+                    </div>
+                    
+                    <div class="menu col-lg-4 col-md-12 col-sm-12 text-right my-2 text-center" style="padding: 0px;">
+                           
+                             {%  if request.session.email != False %}
+                               <ul class="menu" >
+                                <li  class="mx-4" >
+                                            <a href="/insta"  > 
+                                                <i class="menu-item fa fa-home fa-2x" ></i>
+                                            </a>
+                                </li>
+                                <li  class="mx-4" >
+                                            <a href="chat?id=0"> 
+                                                <button id="btnMessage" style="background-color: transparent;border: none;outline: none;" data-toggle="popover" data-placement="bottom"  data-html="true" data-content="<div style='color:brown;' ><label id='message_count' style='font-size:22px;font-weight:600' ></label></div>" >
+                                                <i class="menu-item fa fa-comment fa-2x" >
+                                                  
+                                                </i>
+                                            </button>
+                                            </a>
+                                </li>
+                                <li  class="mx-4" >
+                                    <a href="#"> 
+                                        <i class="fa fa-user fa-2x" ></i>
+                                    </a>
+                                 </li>
+                                <li class="mx-4" >
+                                    <a tabindex="0" style="border: none;outline: none;"  data-placement="bottom" role="button" data-toggle="popover" data-trigger="focus" title="<a id='profile' href='profile?user_id={{request.session.id}}&tab=1' class='menu-item'  > <img class='menu-item' style='padding: 2px;border-radius: 50px;border: solid 5px royalblue;' src='{{request.session.image}}' width='50' height='50' alt=''> <label class='mx-4' style='font-size:20px;color:black;font-weight:100' > {{request.session.firstname}} {{request.session.lastname}} </label> </a>" data-html="true" data-content="<div class='dropdown' >   <a href='#' style='font-size:18px' id='link-popover'  title='Setting'>Settings</a> <br>  <a href='signout' style='font-size:18px' id='link-popover' title='logout from account'>Log out</a></div>"> 
+                                                <i class="fa fa-gear fa-2x" ></i>
+                                    </a>
+                                </ul>
+                             {% else %}
+                             <ul>
+                                <li>
+                                    <button  class="bg-white" >
+                                            <a href="signup"> Sign up</a>
+                                    </button>
+                                </li>
+                                <li>
+                                        <button   class="bg-white" >
+                                            <a href="signin"> Sign in</a>
+                                        </button>
+                                </li>
+                                <li>
+                                        <button class="btn-block btn-success btn" style="background-color: white;border: none;outline: none;" >
+                                            <i class="fa fa-gear fa-1x" ></i>
+                                        </button>
+                                </li>
+                                  </ul>      
+                             {% endif %}   
+                           
+                    </div>
+                    
+                </div> 
+            </div>
+           
+        <div  style="padding: 0px !important;margin: 0px !important" >
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </body>
+</html>
+
+<style>
+    b,p,label
+    {
+        word-break: break-all;
+    }
+    .yellow
+    {
+        border-radius: 60px;
+        color: white;
+        padding: 5px;
+        background-color: brown;
+    }
+    .royalblue
+    {
+        border-radius: 60px;
+        color: white;
+        padding: 5px;
+        background-color: royalblue;
+    }
+    
+.circular
+{
+    border-radius: 30px;
+}
+.search-results
+{
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+}
+.search-results li div b,.search-results li div p
+{
+    word-break: break-word;
+}
+.search-results li div
+{
+    text-align: left;
+    padding-left: 15px;
+}
+.search-results li
+{
+    display: flex;
+    float: left;
+    width: 100%;
+    margin: 0px !important;
+}
+ a
+{
+    text-decoration: none !important;
+    color: gray;
+}
+
+.dropdown  .fa , .menu  .fa 
+{
+    color: gray;
+}
+.loader {
+  width: 40%;
+  height: 5px;
+  background-color: green;
+  position: relative;
+  animation-name: example;
+  animation: example 0.7s linear 0s infinite;
+}
+
+@keyframes example {
+  0%   {left:0%;}
+  25%  {left:25%;}
+  50%  {left:50%;}
+  75%  {left:75%;}
+  100% {left:100%;}
+}
+
+#profile:hover
+{
+
+    cursor: pointer;
+}
+
+#link-popover:hover
+{
+    color: royalblue;
+}
+
+
+    
+.menu
+{
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
+    display:inline-block;
+}
+.menu li 
+{
+    margin-left:5px;
+    float: left;
+   
+}
+.alert-error
+{
+  color: white;
+  background-color: red;
+}
+    /* Popup container - can be anything you want */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color:brown;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+    .bg-white
+    {
+        border-radius: 5px;
+    }
+    .bg-white a
+    {
+        border-color: #898989;color: #898989;outline: none;
+        text-decoration:none ;
+        border-width: 2px;
+        font-size: 15px;
+        font-weight: 400;
+    }
+    
+    .menu .fa:hover
+{
+  color: royalblue !important; 
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+</style>
+<script>
+
+
+function CheckFile()
+        {
+            $("#picture").bind('change', function () {         
+                //this.files[0].size gets the size of your file.    
+
+          
+
+            $("#picname").html(this.files[0].name);
+            });
+            
+        }
+
+    function ShowImagePreview(imageUploader, previewImage) {
+            if (imageUploader.files && imageUploader.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(previewImage).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(imageUploader.files[0]);
+            }
+        }
+
+
+var pageRef=true;    
+$(function () {
+  $('[data-toggle="popover"]').popover()
+});
+$(document).ready(function(){
+
+   
+
+
+    $('.search-box').on('keyup',function(){
+        $('.search-loader').removeClass('collapse');
+        $(this).val();
+            var input=$(this).val();
+        $.ajax({
+            type : 'GET', 
+            url : 'search',
+            data : {value:input},
+            success:function(data)
+            {
+                if(input.length > 0)
+                {
+                    $('.search-results').empty();
+                    jQuery.each(data.list, function(index, item)
+                    {
+                            var tag='';
+
+                            var status=item['Status'];
+                            if(status == "0")
+                            {
+                                tag='fa fa-warning yellow';    
+                            }   
+                            else
+                            {
+                                tag='fa fa-check royalblue';    
+                            }   
+                            $('.search-results').prepend("<a href='profile?user_id="+item['id']+"' ><li class='card-body border' style='display:flex;justify-content:space-between' > <div class='row' > <img class='circular' src='"+item['image']+"' alt='' width='50' height='50' />  <div> <b style='color:black' > "+item['Username']+" </b>  <p style='color:grey;font-weight:100 !important' >"+item['First_Name']+" </p> </div>    </div>"
+                             +"<div  style='display:flex;align-items:center;text-align:center' >"
+                             +"<i class='"+tag+"' style='right:50%' >"
+                             +"</i></div></li>");
+                           
+                    });
+                }
+                else
+                {
+                    $('.search-results').empty();
+                } 
+                $('.search-loader').addClass('collapse');
+            }
+
+        });
+    });    
+
+    $('.menu-item').on('click',function(){
+            $('.parent-loader').removeClass('collapse');
+    });
+    $('.search-box').focusout(function(){
+            $(this).css('background-color','#F1F1F1');
+    });
+    $('.search-box').focusin(function(){
+            $(this).css('background-color','white');
+    });
+
+    window.setInterval(function(){
+    update_my_status();
+    update_message();
+    get_all_comments();   
+    set_comments_time(); 
+}, 1000); 
+
+function set_comments_time()
+{
+    $.ajax({
+            type:'GET',
+            url : 'comments_time',
+            success:function(j){
+                    $.each(j.commentsTime , function(i,j)
+                    {
+                        $("#"+j.comment_id+"comment_time").text(j.duration);
+
+                    });
+                    $.each(j.PostsTime , function(i,j)
+                    {
+                        $("#"+j.post_id+"postTime").text(j.duration);
+
+                    });
+                    
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+        });  
+}
+
+function get_all_comments()
+{
+    
+    $.ajax({
+            type : 'GET', 
+            url : 'update_all_comments',
+            success:function(comment){
+
+                    var session = "{{request.session.username}}";
+                        var link='';
+                        if(comment.username == session)
+                        {
+                            link="<i onclick='delete_comment("+comment.id+")' class='fa fa-times-circle fa-1x' ></i>";
+                        }
+                        else
+                        {
+                            link='';
+                        }
+                        $('.comments'+comment.post_id).append(
+                                    "<li class='border my-2' id='"+comment.id+"' style='padding:10px;display:block !important;' >"+
+                                        "<div>"+
+                                            
+                                            "<div style='display: flex;justify-content:space-between' >"+
+                                                "<div class='col-lg-11 col-md-12 col-sm-12' style='padding:0px;display: flex' >"
+                                                +"<img class='menu-item' style='padding: 2px;border-radius: 50px;border: solid 0px royalblue;' src='"+comment.image+"' width='50' height='50' alt=''>"+
+                                                "<div class='col-lg-12 col-md-12 col-sm-12 py-2 mx-2' style='padding:0px' >"+
+    
+                                                    "<b style='font-size:16px' >"+
+                                                        comment.username+
+                                                    "</b>"+
+                                                    "<label style='color:gray;font-weight:100' class='mx-4' id='"+comment.id+"comment_time' >...</label>"    
+                                                    +
+                                                    "<p>"+
+                                                        comment.description+
+                                                    "</p>"+
+                                                "</div>"+
+                                                "</div>"
+                                                +
+                                                link
+                                            +
+                                            "</div>"+
+                                           "</div>"+
+                                    "</li> "
+        
+                    );
+                    $('#commentsCount'+comment.post_id).text(comment.total);
+
+                   
+                },
+                error : function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+
+        });  
+}
+
+function update_message()
+{
+    $.ajax({
+            type : 'GET', 
+            url : 'update_message',
+            success:function(data)
+            {
+                if(data.message_count != "0")
+                {
+                    $("#message_count").text(data.message_count);    
+                    if ($("#btnMessage").prop('popShown') == undefined) {
+                    $("#btnMessage").prop('popShown', true).popover('show');
+    
+                }
+               
+            }
+                
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+
+        });    
+}
+
+function update_my_status()
+{
+    $.ajax({
+            type : 'GET', 
+            url : 'update_my_status',
+            success:function(data)
+            {
+                
+            },
+            error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+
+        });
+}
+
+});
+
+
+        // update_my_status
+
+
+</script>

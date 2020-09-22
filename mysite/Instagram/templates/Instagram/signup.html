@@ -1,0 +1,466 @@
+
+{% load static %}
+<html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Bootstrap CSS -->
+        <script type='text/javascript' src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.8/jquery.validate.min.js"></script>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+        <title>instagrame</title>
+    </head>
+<body style="background-color:royalblue" >
+<div class="row"  style="padding:0px;margin:0px;justify-content: center;">
+<div class="col-lg-12 col-md-12 col-sm-12 row" style="display:flex;align-items:center" >
+<div class="col-lg-7 col-md-12 col-sm-12 bg-dark" >
+
+</div>
+<div class="offset-lg-7 col-lg-5 col-md-12 col-sm-12 my-4"  >        
+    <div class="card bg-white" style="box-shadow: 0px 0px 10px -6px green;padding:0px" >
+    <div class="col-lg-12 col-md-12 col-sm-12 " style="padding:0px" >
+                    {% if messages %}
+                        {% for message in messages %}
+                                <p class="text-center alert alert-{{message.tags}}" >
+                                    <b>{{message}}</b>
+                                </p>
+                        {% endfor %}
+                    {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 my-4">
+                <h3 class="text-center" style="background-color: white;" >
+                    <b>CREATE NEW ACCOUNT</b>
+                </h3>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                <img style="border-radius:5px;"  src="{% static 'instagram/images/dumm.png' %}"   width="20%"  alt="">   
+
+            </div>
+            
+        </div>
+        <hr>
+        <form action="/insta/signup" method="post" >
+        {% csrf_token %}
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="input-group offset-md-2 col-md-8 col-sm-12" >
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-user" ></i></span>
+                        </div>
+                            <input type="text" id="firstname" name="firstname" minlength="1" maxlength="25" pattern="^[a-zA-Z ]*$"  placeholder="First name:(only use alphabets)" class="form-control form-control-lg" required />
+                        </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="input-group offset-md-2 col-md-8 col-sm-12" >
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-user" ></i></span>
+                        </div>
+                        <input type="text" id="lastname" name="lastname" minlength="1" maxlength="25" pattern="^[a-zA-Z ]*$"  placeholder="Last name:(only use alphabets)" class="form-control form-control-lg" required />
+                        </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="input-group offset-md-2 col-md-8 col-sm-12" >
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-envelope" ></i></span>
+                        </div>
+                        <input type="email" id="email" name="email" minlength="1" maxlength="200" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"  placeholder="Email:(must contain '@','.')" class="form-control form-control-lg" required />
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="input-group offset-md-2 col-md-8 col-sm-12" >
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-lock" ></i></span>
+                        </div>
+                        <input type="password" id="password" name="password" minlength="1" maxlength="25"  placeholder="Password" class="form-control form-control-lg" required />
+                        
+                        </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="input-group offset-md-2 col-md-8 col-sm-12" >
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-lock" ></i></span>
+                        </div>
+                        <input type="password" id="confirmpassword" name="confirmpassword" minlength="1" maxlength="25"  placeholder="Confirm Password" class="form-control form-control-lg" required />
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="offset-md-4 col-md-8 col-sm-12">
+                
+                    <div class="container">
+                        <div class="custom-radio-button">
+                        <div>
+                            <input type="radio" id="color-red" name="gender" value="male" checked>
+                            <label for="color-red">
+                            <span>
+                        
+                            </span>
+                            </label>
+                            <label class=" py-2"  >
+                                Male
+                            </label>
+                        </div>
+                        
+                        <div class="mx-4">
+                            <input type="radio" id="color-blue" name="gender" value="female">
+                            <label for="color-blue">
+                            <span>
+                            </span>
+                            </label>
+                            <label class="py-2">
+                                Female
+                            </label>
+                        </div>
+                        
+                        </div>
+                            </div>
+                        
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="input-group offset-md-2 col-md-8 col-sm-12" >
+                        <div type="submit" class="btn btn-success btn-block btn-lg">
+                                <input type="submit" value="Create Account" style="background-color:transparent;outline:none;border:none;color:white" />
+                                <div class="collapse spinner-border" style="color:white;" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="input-group offset-md-2 col-md-8 col-sm-12" >
+                        <div class="col-lg-5 col-md-12 col-sm-12">
+                            <hr>
+                        </div>
+                        <div class="col-lg-2 col-md-12 col-sm-12 text-center">
+                            <b>OR</b>
+                        </div>
+                        <div class="col-lg-5 col-md-12 col-sm-12">
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <h6 class="text-center" style="color:gray;" >
+                sign up using
+            </h6>
+            <br>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="input-group offset-md-2 col-md-8 col-sm-12" >
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <button type="submit" class="btn btn-danger btn-block btn-lg">
+                                <i class="btn-default fa fa-google bg-white px-2 py-2" style="color:brown" ></i>
+                                <b style="font-weight:100" >google</b>
+                            </button>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">
+                                <i class="btn-default fa fa-facebook bg-white px-2 py-2" style="color:royalblue" ></i>
+                                <b style="font-weight:100" >facebook</b>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="input-group offset-md-2 col-md-8 col-sm-12" >
+                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                    <a href="signin" class="btn btn-sm btn-default border" style="font-size: 12px;" >
+                                        Login
+                                    </a> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <br>
+        <br>
+
+
+        </div>
+    </form>
+</div>
+
+</div>
+</div>
+</body>
+</html>
+
+
+<style>
+.alert-error
+{
+  color: white;
+  background-color: red;
+}
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color:brown;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+.custom-radio-button div {
+  display: inline-block;
+}
+.custom-radio-button input[type="radio"] {
+  display: none;
+}
+.custom-radio-button input[type="radio"] + label {
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+.custom-radio-button input[type="radio"] + label span {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  margin: -1px 4px 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: center;
+  line-height: 44px;
+}
+.custom-radio-button input[type="radio"] + label span img {
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.custom-radio-button input[type="radio"]#color-red + label span {
+  background-color: white;
+}
+.custom-radio-button input[type="radio"]#color-blue + label span {
+  background-color: white;
+}
+.custom-radio-button input[type="radio"]#color-orange + label span {
+  background-color: orange;
+}
+.custom-radio-button input[type="radio"]#color-pink + label span {
+  background-color: pink;
+}
+.custom-radio-button input[type="radio"]:checked + label span {
+  opacity: 1;
+  background: url("{% static 'instagram/images/radio.png' %}")
+    center center no-repeat;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+}
+
+    .form-control
+    {
+        padding:10px ;
+    }
+    .input-group button
+    {
+        outline: none !important;
+        border: none !important;
+    }
+    .input-group label
+    {
+        display: none;
+    }
+</style>
+<script>
+    $(document).ready(function(){
+        var IsValid=false;
+        $("form input").focusout(function()
+        {
+            var error='';
+            var placeholder  =  $(this).attr('placeholder'); 
+            $(this).parents('.input-group').children('.popup').remove();
+            if($(this).valid())
+            {
+                $(this).parents('.input-group').children('.popup').remove();
+                var exp = $(this).attr('pattern');
+                console.log(exp);
+                var regexp = new RegExp(exp);
+                var id = $(this).attr('id');
+                if(id == "password" && $(this).val().length < 7)
+                {
+                    placeholder="Password should contain atleast 7 characters";    
+                    error='<div class="popup"><span class="popuptext show">'+placeholder+'</span></div>';
+                    $(this).parents('.input-group').append(error);
+                    $(this).css('border-color','brown');
+                }
+                else if(id == "confirmpassword" && $(this).val() != $("#password").val())
+                {
+                    placeholder="Password and confirm password should be the same";    
+                    error='<div class="popup"><span class="popuptext show">'+placeholder+'</span></div>';
+                    $(this).parents('.input-group').append(error);
+                    $(this).css('border-color','brown');
+                }
+                else if (regexp.test($(this).val())) {
+                    $(this).css('border-color','green');
+                    IsValid=true;
+                }
+                else
+                {
+                    
+                    error='<div class="popup"><span class="popuptext show">'+placeholder+'</span></div>';
+                    $(this).parents('.input-group').append(error);
+                    $(this).css('border-color','brown'); 
+                    IsValid=false;
+                }
+
+            } 
+            else
+            {
+                
+                $(this).css('border-color','brown');
+                errrval="This field is required";
+                error='<div class="popup"><span class="popuptext show">'+errrval+'</span></div>';
+                $(this).parents('.input-group').append(error);
+                
+            }
+
+
+
+        });
+
+        $(".btn-success").on('click',function(){
+                if(IsValid==false || $('.input-group').children('.popup').length > 0)
+                {
+                    alert("Fill all the fields correctly");
+                }
+                else
+                {
+                    $(this).prop('disabled', true);
+                    $(this).children('input').attr('value','');
+                    $(this).children('div').removeClass('collapse');
+                    $(this).children('b').addClass('collapse');
+                 
+                }
+        });
+
+    });
+    
+    
+    
+    
+    function CheckFile()
+        {
+            $("#fileUpload").bind('change', function () {         
+                //this.files[0].size gets the size of your file.           
+            $("#picname").html(this.files[0].name);
+            
+            
+             var count=0;
+          $("form input").each(function (i,v) {
+            if($(this).valid())
+            {
+              count++;
+            }
+          });
+         
+          if(count==15)
+          {
+             $('.btnRegister').removeClass('collapse'); 
+          }
+          else
+          {
+            $('.btnRegister').addClass('collapse'); 
+          }
+            
+            
+            
+            });
+        }
+    
+        function ShowImagePreview(imageUploader, previewImage) {
+            if (imageUploader.files && imageUploader.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(previewImage).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(imageUploader.files[0]);
+            }
+        }
+    
+    </script>
+

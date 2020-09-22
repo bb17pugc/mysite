@@ -1,0 +1,625 @@
+
+{% extends 'Instagram/layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="card py-4 col-lg-12 col-md-12 col-sm-12" style="padding:0px" >
+<div class="container" style="padding: 0px;" >
+
+    {% for i in posts %} 
+    <div class="col-lg-6 col-md-12 col-sm-12 " style="padding: 0px;" >
+                       
+    <div class="card" id="{{i.id}}">
+        <br>
+          <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12" >
+                      <div class="col-lg-6 col-md-12 col-sm-12" style="padding: 0px;"  >
+                          <div style="display: flex;align-items: center;" class="col-sm-12 col-md-12 col-lg-12" >
+                              <div  style="margin: 0px;" >
+                                  <img src="{{i.User.image}}" width="50" height="50" style="border:solid 3px royalblue;border-radius:60px;padding: 3px;"   alt="">
+                              </div>
+                              <div class="mx-4" >
+                                  <div style="display: flex;" >
+                                      <h3  style="margin:0px" >
+                                          
+                                              <a style="color: black;font-weight: 600;" href='profile?user_id={{i.User.id}}'> <label style="font-size: 20px;" for=""> {{i.User.Username}} </label> </a>
+                                          
+                                      </h3>
+                                      <label class="mx-4" id="{{i.id}}postTime" style="color: grey;" for="">...</label>
+                                  </div>
+                                  <div style="display: flex;" >
+                                      <i class="fa fa-facebook btn btn-primary btn-sm px-2" style="border-radius: 60px;padding: 0px;font-size: 10px;" ></i>
+                                      <i class="mx-2 fa fa-twitter btn btn-primary btn-sm " style="border-radius: 60px;padding: 0px 3px 0px 3px;font-size: 10px;" ></i>    
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-6 col-md-12 col-sm-12 py-4" style="justify-content: flex-end;align-items: center;display: flex;" >
+                           
+                      </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 post-bio-data{{i.id}}">
+                  <div class="row">
+                      <div class="row col-lg-12 col-md-12 col-sm-12">
+                      <div class="col-lg-11 col-md-12 col-sm-12" >
+                          <br>
+                          <p class="mx-4" >
+                              <b>
+                              <h4 class="mx-4" style="margin: 0px ;" >
+                                  {{i.Title}}
+                              </h4>
+                          </b>
+                          
+                          </p>
+                          <p class="mx-4" >
+
+                              <h4 class="mx-4" >
+                                  {{i.Description}} 
+                              </h4>
+                          </p>
+                          
+                      </div>
+                  </div>
+                  </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="col-lg-12 col-md-12 col-sm-12 text-center" id="postotherdata{{i.id}}" style="padding: 0px;" >
+                  {% if i.Type == "image" %}
+                          {% for i in i.Photos %}
+                          {% if forloop.last and forloop.first %}
+                          <div class="col-lg-12 col-md-12 col-sm-12 border bg-dark" style="padding: 0px;height: min-content;" >
+                                  <img src="{{i}}" width="100%"   alt="">
+                          </div>   
+                         
+                          {% else %}
+                          <div  style="display: flex;justify-content: space-between;position: absolute;top: 20;z-index: 1;" class="collapse col-lg-12 col-md-12 col-sm-12" >
+                            <i class="fa fa-angle-left fa-4x bg-dark px-4" style="color: white;" >
+
+                            </i>   
+                            <i class="fa fa-angle-right btn-pic-forward fa-4x bg-dark px-4" style="color: white;" >
+
+                          </i>   
+                         </div>
+                             {% if forloop.first %}
+                              <div class="pic-box bg-dark col-lg-12 col-md-12 col-sm-12 border bg-dark" style="padding: 0px;height: min-content;" >
+                             {% else %}
+                             <div class="collapse pic-box col-lg-12 col-md-12 col-sm-12 border bg-dark" style="padding: 0px;height: min-content;" >
+                             {% endif %}
+                        
+                                <img src="{{i}}" width="100%"   alt="">
+                               </div>   
+                          {% endif %}    
+                          {% endfor %}
+                             
+
+                  {% else %}
+                  
+                   <video id="{{i.id}}post_vedio" width="100%" height="500" poster= "{{i.Image.url}}"  style="background-color: black;">  
+                          <source src= "/media/vedios/{{i.Vedio}}" type="video/mp4"> 
+                      </video>  
+                      <i class="fa fa-play fa-4x"  style="border-radius: 100px !important;position: absolute;z-index: 1;right: 250;top: 220;" >
+
+                      </i>  
+               {% endif %}
+             
+                  </div>
+               
+              </div>
+
+          </div>
+
+    </div>  
+ <br>
+    </div>                    
+    <div class="col-lg-6 col-md-12 col-sm-12" >
+        <div class="col-lg-12 col-md-12 col-sm-12" >
+            <div  style="color: grey;display: flex;justify-content: space-between;"  >
+                <div  style="height: 40px;" >
+                   
+                    <i class="fa fa-comment  fa-2x"  ></i>
+                    <b >
+                        <label for="" id="commentsCount{{i.id}}" >0</label> Comments
+                    </b>
+                
+                </div>
+                <div style="display: flex;justify-content: center;"  >
+                    <i id="{{i.id}}" class="like_sign{{i.id}} fa fa-heart fa-2x mx-2"  ></i>
+                    <b style="color: gray;float: right;" >
+                        <label for="" id="like_count{{i.id}}" >0</label> Likes
+                    </b>
+                </div>    
+            </div>
+          
+        </div>
+        <div class=" col-lg-12 col-sm-12 col-sm-12 side-comment-box " >
+            <div class=" col-lg-12 col-sm-12 col-sm-12">
+            
+               
+                <ul  style="width: 100%;overflow-y: auto;max-height: 600px;list-style-type: none;padding: 5px;overflow-x: hidden;" id="comment-box"  class="comments{{i.id}}" >
+                        
+                </ul>
+            </div>
+            <div class="my-2 col-lg-12 col-md-12 col-sm-12 "  >
+                    <form method="POST" enctype="multipart/form-data" id="{{i.id}}{{i.id}}" >
+                        {% csrf_token %}
+                        <div class="col-lg-12 col-md-12 col-sm-12 card">
+                        <input type="hidden" value="{{i.id}}" name="post_id" >
+                        <input type="hidden" value="{{i.User.id}}" name="user_id" >
+                        <div style="display: flex;justify-content: space-between;" >
+                            
+                        <textarea minlength="1" onkeypress="comment('{{i.id}}')" class="my-4 commentbox" name="description" id="description" rows="2"  placeholder="write your comment"  style="width: 100%;border: none !important;display: block;resize: none;outline:none !important;"  ></textarea>
+                        <button style="outline: none;background-color: transparent;border: none;outline: none;" type="button" id="{{i.id}}" class="btn-comment" >
+                                <i class="fa fa-angle-right btn btn-default fa-2x" style="border-radius: 150px;font-weight: 500;" >
+    
+                                </i>
+                        </button>
+    
+                        
+                    </div>  
+                    </div>
+                </form>
+            </div>
+        </div>
+     
+    </div>                    
+ 
+{% endfor %}
+
+</div>
+</div>
+
+<style>
+
+    .font-20
+    {
+        font-size: 20px;
+    }
+    .deleting
+    {
+        color: gray;
+    }
+
+    p
+    {
+        word-break: break-all;
+    }
+    .fa-heart-shadow{
+  text-shadow: 1px 1px 6px #ff3399;
+}
+    #comment-box li
+    {
+        border-radius: 6px;
+        background-color: #F0EEEE;
+        
+    }
+    .fa 
+    {
+        cursor: pointer;
+    }
+
+    .fa-play:hover
+    {
+        color: grey !important;
+    }
+    .active 
+    {
+        color: green;
+    }
+</style>
+
+
+<script>
+
+
+    var comment_id = 0;
+    var vedio="";
+    var post_id=0;
+    
+    
+    var element = $("#"+post_id) // global variable
+            var getCanvas; //       
+    
+    
+    function FullScreen(data)
+    {
+        $(data).closest('div').removeClass('col-lg-3');
+        $(data).closest('div').animate({width: '100%'}, 500);
+        $(data).animate({height: '2000px'}, 500) ;
+        
+    }
+    
+    $(document).ready(function(){
+    
+    $('.btn-pic-forward').on('click' , function()
+    {
+        $('.pic-box').each(function() {
+            if(!$(this).hasClass('collapse'))
+            {
+                $(this).next("div.pic-box").removeClass("collapse");
+                $(this).addClass("collapse");
+                
+            }
+  });
+    });
+        
+    $('.fa-comment').on('click' , function()
+    {
+        $(this).toggleClass('active');
+        $(this).animate({fontSize: '35px'}, 40) ;
+        $(this).animate({fontSize: '30px'}, 40) ;
+
+        $('.side-comment-box').slideToggle();
+        
+    })
+    
+      
+    
+    function PostLikes(id)
+    {
+        
+        $.ajax({
+                type:'GET',
+                url : 'like_seen?id='+id,
+                success:function(j){
+                        
+                        if (j.like)
+                        {
+                            $(".like_sign"+id).css("color", "linear-gradient(to bottom, #ff3399 0%, #ff66cc 61%)");
+                            
+                            $(".like_sign"+id).addClass("fa-heart-shadow");
+                            $("#like_count"+id).text(j.count);
+                            
+    
+                            $(".like_sign"+id).animate({fontSize: '35px'}, 40) ;
+                            $(".like_sign"+id).animate({fontSize: '30px'}, 40) ;
+                              
+                        }
+                        else
+                        {
+                            
+                            $(".like_sign"+id).css("color", "grey");  
+                            $(".like_sign"+id).removeClass("fa-heart-shadow");
+                            $("#like_count"+id).text(j.count);
+                        }
+                },
+                error : function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+            });
+    }
+    
+    
+    $('.fa-heart').on('click' , function()
+    {
+        var id = 0;
+         id = $(this).attr('id');
+         PostLikes(id);  
+    });
+    
+    //code to see if post is in viewreport
+   
+    //function to delete comment
+        $('.btn-yes').on('click',function(){
+            $("#"+comment_id).find('i').removeClass('fa fa-times-circle');
+            
+            $("#"+comment_id).find('i').addBack('deleting');
+        
+            $("#"+comment_id).find('i').text('deleting');
+        
+            $.ajax({
+                type:'GET',
+                url : 'delete_comment?id='+comment_id,
+                success:function(j){
+                    $("#"+comment_id).hide();
+                    var commentCount=$("#commentsCount"+j.post_id).text();
+                    commentCount=parseInt(commentCount);
+                    commentCount = commentCount-1;
+                    $("#commentsCount"+j.post_id).text(commentCount);
+                    
+                },
+                error : function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+            });
+        });
+    
+  
+
+  
+    
+    
+    
+    $('.BtnViewAllPhotos').on('click',function(){
+       
+        var id = $(this).attr('id');
+            $(this).siblings('.'+id).modal({
+      escapeClose: false,
+      clickClose: false,
+      showClose: false
+    });
+    });
+
+  
+    
+    });
+    $(function()
+    {
+        getAllComments();
+    
+        $('.card').each(function() {
+        var activeColor = $(this).attr('id');
+      
+                if(activeColor != undefined)
+                {
+                    GetLikes(activeColor);  
+                }
+       
+      });
+        
+    
+    });
+    
+    
+    function delete_comment(id)
+    {
+        comment_id=id;
+      $("#ex3").modal({
+      escapeClose: false,
+      clickClose: false,
+      showClose: false
+    });
+    }
+    
+    function getAllComments()
+    {
+        $.ajax({
+                type:'GET',
+                url : 'get_all_comments',
+                success:function(json){
+                    $.each(json.comments,function(i,j)
+                    {
+    
+                        var session = "{{request.session.username}}";
+                        var link='';
+                       
+                        $('.comments'+j.post_id).append(
+                                    "<li id='"+j.id+"' class='border my-2' style='padding:10px;display:block !important;' >"+
+                                        "<div>"+
+                                            
+                                            "<div style='display: flex;justify-content:space-between' >"+
+                                                "<div class='col-lg-11 col-md-12 col-sm-12' style='padding:0px;display: flex' >"
+                                                +"<img class='menu-item' style='padding: 2px;border-radius: 50px;border: solid 0px royalblue;' src='"+j.image+"' width='50' height='50' alt=''>"+
+                                                "<div class='col-lg-12 col-md-12 col-sm-12 py-2 mx-2' style='padding:0px' >"+
+                                                    "<b style='font-size:16px' >"+
+                                                        j.username+
+                                                       
+                                                    "</b>"+
+                                                    "<label style='color:gray;font-weight:100' class='mx-4' id='"+j.id+"comment_time' >...</label>"    
+                                                        +
+                                                    "<p>"+
+                                                        j.description+
+                                                    "</p>"+
+                                                "</div>"+
+                                                "</div>"
+                                                +
+                                                link
+                                            +
+                                            "</div>"+
+                                           "</div>"+
+                                    "</li>"
+        
+                    );
+                    $('#commentsCount'+j.post_id).text($('.comments'+j.post_id).children().length);
+                    }) ;  
+                },
+                error : function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+            });
+    }
+    
+    window.setInterval(function(){
+       
+        var picked = false;
+        seens(picked);    
+      
+        //method to show comments time
+        //postTime
+        $.ajax({
+                type:'GET',
+                url : 'comments_time',
+                success:function(j){
+                        $.each(j.commentsTime , function(i,j)
+                        {
+                            $("#"+j.comment_id+"comment_time").text(j.duration);
+    
+                        });
+                        $.each(j.PostsTime , function(i,j)
+                        {
+                            $("#"+j.post_id+"postTime").text(j.duration);
+    
+                        });
+                        
+                },
+                error : function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+            });  
+    
+    
+    }, 1000);
+    
+    var id=0;
+    function comment(formId)
+    {
+        id=formId+formId;
+    }
+    
+        $(document).ready(function(){
+    function uplaodcomment(form)
+    {
+    
+        if($("#description").length > 0)
+        {
+        var formData = new FormData(document.getElementById(form));
+            $.ajax({
+                type:'POST',
+                url : 'upload_comments',
+                data : formData ,
+                processData: false,
+                contentType: false,
+                success:function(comment){
+                   
+                        $('.commentbox').val("");
+                    
+                },
+                error : function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+            });
+        }
+        
+    }
+    $(document).on('keypress',function(e) {
+        if(e.which == 13) {
+            uplaodcomment(id);
+        }
+    });
+    
+                
+                $('.fa-play').on('click',function()
+                {
+                        $(this).addClass('fa-circle-o-notch fa-spin');
+                        $(this).fadeOut('10000');
+                        $(this).siblings('video').attr('controls','controls');
+                        vedio = document.getElementById($(this).siblings('video').attr('id'));
+                        vedio.play();  
+                        $(this).fadeOut('10000');
+     
+                });
+    
+    
+                vedio.onplaying = function() {
+                alert("The video is now playing");
+                };
+    
+            $(".btn-comment").on('click',function(e){
+                
+            var form = $(this).attr('id')+$(this).attr('id');
+            uplaodcomment(form);
+           
+        });
+    });
+    
+    
+    
+    $('.fa-times-circle').on('click',function(){
+            alert("");
+           
+        });
+    
+    
+        function seens(Picked)
+    {
+    
+        picked=Picked;
+        $('.card').each(function() {
+        var activeColor = $(this).attr('id');
+            
+        if ($(this).isInViewport() && picked == false) {
+                
+                picked=true;
+    
+                $.ajax({
+                type:'GET',
+                url : 'post_seen?id='+activeColor,
+                success:function(j){
+    
+                },
+                error : function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+            });    
+    
+    
+        } else {
+        }
+       
+      });
+    }
+    
+    
+    function PostLikes(id)
+    {
+        
+        $.ajax({
+                type:'GET',
+                url : 'like_seen?id='+id,
+                success:function(j){
+                        
+                        if (j.like)
+                        {
+                            $(".like_sign"+id).css("color", "linear-gradient(to bottom, #ff3399 0%, #ff66cc 61%)");
+                            
+                            $(".like_sign"+id).addClass("fa-heart-shadow");
+                            $("#like_count"+id).text(j.count);
+                            
+    
+                            $(".like_sign"+id).animate({fontSize: '35px'}, 40) ;
+                            $(".like_sign"+id).animate({fontSize: '30px'}, 40) ;
+                              
+                        }
+                        else
+                        {
+                            
+                            $(".like_sign"+id).css("color", "grey");  
+                            $(".like_sign"+id).removeClass("fa-heart-shadow");
+                            $("#like_count"+id).text(j.count);
+                        }
+                },
+                error : function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+            });
+    }
+    
+    function GetLikes(id)
+    {
+        
+        $.ajax({
+                type:'GET',
+                url : 'get_Likes?id='+id,
+                success:function(j){
+                        
+                        if (j.like)
+                        {
+                            $(".like_sign"+id).css("color", "linear-gradient(to bottom, #ff3399 0%, #ff66cc 61%)");
+                            
+                            $(".like_sign"+id).addClass("fa-heart-shadow");
+                            $("#like_count"+id).text(j.count);
+                            
+    
+                            $(".like_sign"+id).animate({fontSize: '35px'}, 40) ;
+                            $(".like_sign"+id).animate({fontSize: '30px'}, 40) ;
+                              
+                        }
+                        else
+                        {
+                            
+                            $(".like_sign"+id).css("color", "grey");  
+                            $(".like_sign"+id).removeClass("fa-heart-shadow");
+                            $("#like_count"+id).text(j.count);
+                        }
+                },
+                error : function(xhr,errmsg,err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+            });
+    }
+    
+    
+    </script>
+
+
+{% endblock content %}
